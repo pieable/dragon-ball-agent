@@ -75,7 +75,7 @@
 
 角色从独立 TOML 文件加载。当前宿主可发现 `agents/` 中的角色，无需在 `config.toml` 逐一登记。主模型沿用用户选择，角色模型在安装时核对可用性。
 
-## Skills
+## 12 个 Skills
 
 | 类别 | Skill |
 | --- | --- |
@@ -83,7 +83,6 @@
 | 调查与判断 | `deep-research`、`search-source-registry`、`company-research-brief`、`xy-axis-thinking` |
 | 工作状态与表达 | `workflow-state-distiller`、`workflow-route-mapper`、`eli5` |
 | 提示词维护 | `write-instructions-zh` |
-| 专项工作 | `livestream-video-editing`、`markitdown-files`、`playwright`、`resume-jd-optimizer-cn` |
 
 每个 Skill 的 `description` 负责说明触发条件，正文与引用资源承载具体方法。外部工具、插件及账号凭据需由接收环境提供。
 

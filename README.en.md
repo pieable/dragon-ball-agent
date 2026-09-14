@@ -75,7 +75,7 @@ Follow an evolving loop: update understanding, fill information gaps, plan the n
 
 Current hosts discover standalone role TOML files from the agent directory. A per-role entry in `config.toml` is not required. Keep the user's main model and check availability of models specified in role files.
 
-## Skills
+## 12 Skills
 
 | Area | Skills |
 | --- | --- |
@@ -83,7 +83,6 @@ Current hosts discover standalone role TOML files from the agent directory. A pe
 | Research and judgment | `deep-research`, `search-source-registry`, `company-research-brief`, `xy-axis-thinking` |
 | Task state and communication | `workflow-state-distiller`, `workflow-route-mapper`, `eli5` |
 | Instruction maintenance | `write-instructions-zh` |
-| Specialized work | `livestream-video-editing`, `markitdown-files`, `playwright`, `resume-jd-optimizer-cn` |
 
 Descriptions specify when a Skill applies; its body and references provide the method. External tools, plugins, and credentials are supplied by the receiving environment.
 

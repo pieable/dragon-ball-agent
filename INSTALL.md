@@ -28,7 +28,6 @@
 
 - 全局规则含 Windows / PowerShell 和 FastCtx 使用约定。非 Windows 环境按其平台调整对应小节。FastCtx 不可用时使用宿主提供的等价文件工具，并说明替代情况。
 - 浏览器与视觉操作依赖宿主可用的浏览器或截图工具。角色文件本身不会安装工具，也不会授予新的权限。
-- `markitdown-files` 需要 MarkItDown，`playwright` 需要其 Skill 中说明的命令行环境。Playwright 的命令示例采用旧安装路径，安装在其他目录时将 `PWCLI` 指向实际的 `scripts/playwright_cli.sh`，再执行示例。`livestream-video-editing` 的 Resolve 工作流依赖本机软件。
 - 研究 Skill 的搜索工具、GitHub 访问与网络权限由接收环境提供。可选凭据只从环境变量或宿主凭据系统获得。
 - 其他 Skill / 插件的名称引用不代表本仓库附带它们，缺失时按任务需要安装或明确使用替代方法。
 
