@@ -1,54 +1,47 @@
-# 给安装 AI 的任务合同
+# 安装与更新
 
-把本仓库合并安装到当前用户真实使用的 `CODEX_HOME`，使 Root Base、共同执行层、Worker Base、两个自包含阶段角色、十个命名角色和十二个体系 Skill 在新任务中可用，并安装用于保护 subagent 上下文边界的 Hook。
+这是一套可合并安装的个人工作规则、角色定义与 Skills。先检查接收环境，按需要选择内容。仓库不包含账号配置、密钥、MCP 服务程序或插件缓存。
 
-## 目标与边界
+## 安装位置
 
-- 先解析当前环境真实使用的 `CODEX_HOME`，不要根据仓库作者的路径猜测；
-- 保留接收者已有且与本体系无关的配置、Agents、Skills、MCP、插件和项目资料；
-- 写入前备份所有将被创建、替换或合并的文件，以及原始 `config.toml`；
-- 不复制仓库之外的备份、会话、缓存、账户数据或凭据；
-- 模型不可用、同名文件无法安全合并、真实加载机制与本文不符或需要扩大权限时，停止相应写入并报告具体矛盾；
-- 不增加 Python 同步程序、常驻进程或 Hook 来拼接提示词。
-
-## 安装步骤
-
-1. 读取 [`examples/config.toml`](examples/config.toml)、`prompt-lab/`、`global/AGENTS.md`、`agents/` 和 `skills/`，确认仓库结构完整。
-2. 在 `CODEX_HOME` 下创建 `prompt-lab`、`agents`、`skills` 和独立备份目录。
-3. 复制 `prompt-lab/` 中的 Root Base 与公开维护材料。
-4. 复制 `agents/` 中的共享中性 Base、Worker Base、十份角色 TOML 和维护说明。
-5. 复制 `skills/` 下十二个体系 Skill 的完整目录。
-6. 把 `global/AGENTS.md` 的共同执行层合并到 `CODEX_HOME/AGENTS.md`。保留已有无关内容，已经存在的相同规则不重复写入。
-7. 把示例中出现的 `{{CODEX_HOME}}` 替换为真实绝对路径。
-8. 合并 `config.toml`：
-   - 保留无关顶层配置；
-   - 按用户确认的模型映射设置 Root 模型与推理强度；
-   - 令 `model_instructions_file` 指向 `agents/shared-runtime-base-instructions.md`；
-   - 把 `prompt-lab/codex_base_instruction_5.6.md` 的正文逐字写入顶层 `developer_instructions`，替换示例中的 `{{ROOT_BASE_CONTENT}}`；
-   - 设置或确认 `[agents]` 的深度与并发限制；
-   - 创建或替换本仓库点名的十个 `[agents.<role>]` 注册段；
-   - 保留其他 Agent、MCP、插件、Hook 状态和功能配置。
-9. 不要把 Root Base 配置为 `model_instructions_file`。该层会被 subagent 继承，只能放所有责任层都安全的中性 Base。
-10. 解析合并后的 TOML，并检查：
-    - `developer_instructions` 与 Root Base 的长度和 SHA-256 一致；
-    - 其余八个角色逐字符以 Worker Base 开头；
-    - `code-executor` 与 `research-lead` 不以 Worker Base 开头，并分别包含完整的代码阶段与研究阶段专属边界、路线和交回规则；
-    - 所有配置引用路径存在；
-    - 角色 TOML 不包含当前运行时不支持的伪权限或伪环境字段。
-11. 把 `hooks/hooks.json` 和 `hooks/fork-turns-guard.ps1` 合并安装到 `CODEX_HOME` 对应位置；保留其他 Hook。Hook 文件改变后由宿主重新进行信任确认，不写入或伪造 `trusted_hash`。
-12. 可选择新建 Root、阶段负责人和执行型 subagent 测试任务，确认真实加载和 Hook 拦截。用户不希望为安装验证消耗额度时可以跳过，并把 fresh-task 行为标为未验证。
-13. 每次委派都显式使用 `fork_turns: "none"`。最近用户原话或既有判断会改变责任时，把必要内容写进合同或稳定项目文件；不使用有限轮数、`all`，也不省略参数。
-14. 浏览器角色和视觉测试角色还需要宿主实际提供对应能力。复制角色文件不会自动开启能力或扩大外部操作授权。
-
-## 模型层级参考
-
-| 层级 | 默认模型 | 用途 |
+| 仓库内容 | 目标位置 | 用途 |
 | --- | --- | --- |
-| Root | `gpt-5.6-sol` | 用户理解、整体路线、跨阶段判断、整合与最终交付 |
-| Terra 阶段与评审 | `gpt-5.6-terra` | Research Lead、Code Executor、Code Reviewer |
-| Luna 执行 | `gpt-5.6-luna` | Explorer、Web Researcher、Worker Luna、Browser Operator、Visual Usability Tester |
-| 高速 Worker | `gpt-5.3-codex-spark` | 合同明确且速度收益明显的执行单元 |
+| `global/AGENTS.md` | `CODEX_HOME/AGENTS.md`，默认 `~/.codex/AGENTS.md` | 全局工作方式，合并已有规则 |
+| `agents/*.toml` | `~/.codex/agents/`，或项目 `.codex/agents/` | 10 个角色定义 |
+| `skills/<name>/` | 宿主实际发现的个人或项目 Skill 目录 | 完整复制选用的 Skill 及其资源 |
+| `examples/project-AGENTS.md` | 参考后编写项目 `AGENTS.md` | 项目边界和资料入口 |
 
-## 完成报告
+官方当前文档列出的个人 Skill 目录是 `~/.agents/skills/`，项目目录是 `.agents/skills/`。部分现有安装使用 `~/.codex/skills/`。先核实当前宿主的发现位置，避免在多个目录安装同名副本。使用自定义 `CODEX_HOME` 时也要核实角色的实际加载位置。
 
-说明实际使用的 `CODEX_HOME`、备份位置、创建和替换的文件、保留的配置、最终模型映射、Root 镜像一致性、Worker 前缀与阶段专属提示词检查、TOML 解析、Hook 静态检查、实际执行过的真实加载验证，以及仍未验证的部分。
+## 合并步骤
+
+1. 记录当前版本，备份将修改的文件。备份可能包含敏感配置，留在本地，不提交到公开仓库。
+2. 阅读全局规则，将需要的规则合并到现有 `AGENTS.md`。检查同目录的 `AGENTS.override.md`，它可能使 `AGENTS.md` 不被加载。保留接收环境已有的权限、MCP、插件和项目配置。
+3. 复制选用的角色 TOML。支持目录发现的当前宿主按文件中的 `name` 识别角色，无需在 `config.toml` 逐一登记。已有 `[agents.<name>]` 时，确认它是否包含独立覆盖或指向不同文件，再决定是否清理重复引用。
+4. 按任务需要复制完整 Skill 目录，保留引用资源、许可证与 UI 元数据。按下一节核对工具依赖。
+5. 保留用户当前主模型。角色中的模型和推理强度是本仓库的配置选择，安装前确认目标账号支持。需要替换时让用户决定能力与成本的取舍。
+6. 打开新任务，检查全局规则、选用的 Skill 和角色是否可见。按安装范围运行一个无副作用的代表任务，核对角色与工具是否按预期工作。
+
+`examples/config.toml` 只是可选全局限制片段，不能覆盖整份用户配置。旧版宿主若不支持目录发现，应依照该版本文档适配，并单独验证。
+
+## 环境依赖
+
+- 全局规则含 Windows / PowerShell 和 FastCtx 使用约定。非 Windows 环境按其平台调整对应小节。FastCtx 不可用时使用宿主提供的等价文件工具，并说明替代情况。
+- 浏览器与视觉操作依赖宿主可用的浏览器或截图工具。角色文件本身不会安装工具，也不会授予新的权限。
+- `markitdown-files` 需要 MarkItDown，`playwright` 需要其 Skill 中说明的命令行环境。Playwright 的命令示例采用旧安装路径，安装在其他目录时将 `PWCLI` 指向实际的 `scripts/playwright_cli.sh`，再执行示例。`livestream-video-editing` 的 Resolve 工作流依赖本机软件。
+- 研究 Skill 的搜索工具、GitHub 访问与网络权限由接收环境提供。可选凭据只从环境变量或宿主凭据系统获得。
+- 其他 Skill / 插件的名称引用不代表本仓库附带它们，缺失时按任务需要安装或明确使用替代方法。
+
+## 验证与回退
+
+分别记录文件安装、宿主发现、实际任务三个结果。语法通过或可见列表正确，只证明对应层面，不能证明所有任务表现。未做新任务测试时明确写“真实使用尚未验证”。出现冲突时按备份恢复本次改动，不覆盖安装前的其他配置。
+
+更新时对照仓库 diff 合并。旧共享 Base、Root 配置镜像、强制 `fork_turns:none` Hook 和 `batch-execution` 不属于当前安装入口。迁移说明见 [历史与本次发布](docs/HISTORY.md)。
+
+## 官方依据
+
+- [AGENTS.md 加载](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+- [自定义角色目录与字段](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+- [Skill 发现与编写](https://learn.chatgpt.com/docs/build-skills)
+
+文档和宿主会更新。安装时以目标环境实际支持的行为为准。

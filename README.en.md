@@ -50,102 +50,52 @@ After going to great lengths to collect ~~$200~~ all seven Dragon Balls...
 
 ---
 
-Dragon Ball Agent is a Codex configuration system for long-term collaboration. Root understands the user's goals, maintains the overall plan, and owns final acceptance. Phase leads own entire stages. Execution-oriented subagents take on only responsibilities whose boundaries and acceptance criteria are already settled.
+A Codex instruction system for long-term collaboration. The primary agent continuously owns user understanding, overall design, core implementation, and final judgment, delegating bounded responsibilities when useful.
 
-> This is a community configuration, not an official OpenAI project.
+> Community configuration, not an official OpenAI project. Model, role, and tool support depends on the receiving environment.
 
-## What it solves
+## Working method
 
-- Deliver the smallest usable result or Demo that can validate the core value first, rather than continuing to invest in an unproven approach;
-- Before continuing, retrying, or expanding scope, check whether the next action will advance a verifiable outcome or produce new evidence, avoiding busywork and endless rabbit holes;
-- Keep the user's goals, the overall plan, and cross-stage decisions with Root, while isolating implementation details and long logs within the responsible layer;
-- Delegate small, well-defined tasks directly, and assign work that still requires ongoing judgment and multiple rounds of coordination to a phase lead;
-- Escalate high-cost runs, broad changes, and cross-stage impacts through the responsibility chain;
-- When a stage ends, the plan changes, or the work is about to scale up, have Root show the user where things stand with a visual-first explanation.
+Follow an evolving loop: update understanding, fill information gaps, plan the next bounded round, then execute and evaluate its result. The overall route develops with evidence. Plan numbers make cumulative effort visible within a task; simple tasks need no formal numbering.
 
-## Current prompt assembly
+- Product development revisits value, experience, scope, and success criteria as ideas and feedback develop.
+- Code development implements and verifies real usage paths, distinguishing local checks from complete outcomes.
+- Deep research builds the decision-relevant domain framework, then selects candidates and deeper investigations while retaining reusable module-level value.
+- Delegation divides responsibilities and outputs. The primary agent does not repeat delegated research through different sources, and still owns retained design, key code, and integration.
 
-| Layer | Source | Root | Named subagent (`fork_turns: "none"`) |
-| --- | --- | --- | --- |
-| Neutral Runtime Base | [`agents/shared-runtime-base-instructions.md`](agents/shared-runtime-base-instructions.md) | Loaded | Loaded |
-| Root Base | The `config.toml` runtime mirror of [`prompt-lab/codex_base_instruction_5.6.md`](prompt-lab/codex_base_instruction_5.6.md) | Loaded | Replaced by the role's `developer_instructions` |
-| Shared execution layer | [`global/AGENTS.md`](global/AGENTS.md) | Loaded | Loaded |
-| Role layer | `agents/*.toml` | N/A | A complete stage-specific prompt, or Worker Base plus role-specific instructions |
-| Domain methods | `skills/*` | Loaded when triggered | Loaded through role configuration or when triggered |
+## Current structure
 
-Named roles used with `fork_turns: "none"` do not inherit the parent conversation or load the Root developer mirror. Every automatic delegation explicitly specifies `none`. Required user decisions are passed through self-contained contracts or stable project files—never through a limited turn count, `all`, or an omitted parameter. A project's `AGENTS.md` can contain both project-specific rules and an index of authoritative files; see [`examples/project-AGENTS.md`](examples/project-AGENTS.md).
+| Layer | Files | Purpose |
+| --- | --- | --- |
+| Global guidance | [global/AGENTS.md](global/AGENTS.md) | Work loop, authority, collaboration, and communication |
+| Roles | [agents/](agents/README.md) | 10 self-contained role definitions |
+| Task methods | [skills/](skills/) | Skills and supporting resources |
+| Installation | [INSTALL.md](INSTALL.md), [examples/](examples/) | Merge installation and project adaptation |
+| Release history | [docs/HISTORY.md](docs/HISTORY.md) | Current changes and previous versions |
 
-## Three-layer responsibility structure
+Current hosts discover standalone role TOML files from the agent directory. A per-role entry in `config.toml` is not required. Keep the user's main model and check availability of models specified in role files.
 
-```text
-User
-  └─ Root: goals, overall plan, cross-stage decisions, final acceptance, and user reporting
-       ├─ Phase lead: the full stage, ongoing judgment, subagent coordination, integration, and stage acceptance
-       │    └─ Execution-oriented subagent: one responsibility with settled boundaries and acceptance criteria
-       └─ A few execution-oriented subagents: fixed, small tasks expected to finish in a single turn
-```
+## Skills
 
-### Phase leads
+| Area | Skills |
+| --- | --- |
+| Development and experience | `product-development`, `code-development`, `code-review`, `frontend-design` |
+| Research and judgment | `deep-research`, `search-source-registry`, `company-research-brief`, `xy-axis-thinking` |
+| Task state and communication | `workflow-state-distiller`, `workflow-route-mapper`, `eli5` |
+| Instruction maintenance | `write-instructions-zh` |
+| Specialized work | `livestream-video-editing`, `markitdown-files`, `playwright`, `resume-jd-optimizer-cn` |
 
-- `research-lead`: large-scale, multi-round web research;
-- `code-executor`: code stages that still require continuous diagnosis, implementation, integration, and verification.
-
-### Execution-oriented roles
-
-- `explorer`: bounded local evidence gathering;
-- `web-researcher`: bounded web evidence gathering;
-- `code-reviewer`: independent, read-only code review;
-- `browser-operator`: continuous browser-operation stages;
-- `visual-usability-tester`: screenshot- and coordinate-driven visual black-box testing;
-- `worker-luna`: primary execution work whose method and acceptance criteria are already settled;
-- `worker`: high-speed execution when Spark quota is available and the speed benefit is clear;
-- `default`: a compatibility leaf entry point, not a fallback for automatic routing.
-
-See [`agents/README.md`](agents/README.md) for the authoritative Worker Base files, inline mirror relationships, stage-specific prompts, and runtime-supported fields.
-
-## Twelve system Skills
-
-- `batch-execution`: contain cascading risk in repetitive batch work;
-- `code-development`: investigate, implement, review, and perform the necessary verification for code changes;
-- `code-review`: independently determine whether code is ready to merge or deliver;
-- `company-research-brief`: fill gaps in public company information, compare product lines and peers, and produce a pre-investment screening brief;
-- `deep-research`: conduct multi-source research with counterevidence and synthesis;
-- `eli5`: explain plans, routes, status, and trade-offs with a visual-first approach;
-- `product-development`: turn real customer needs into a product definition and validate it iteratively;
-- `search-source-registry`: choose authoritative search sources based on the claim and track remaining evidence gaps;
-- `workflow-route-mapper`: record task branches, failed routes, and next steps;
-- `workflow-state-distiller`: recover the executable current state of a long, multi-turn task;
-- `write-instructions-zh`: create and maintain Base, Agent, Skill, and long-term instructions;
-- `xy-axis-thinking`: trace how a problem developed, clarify the goal, and establish useful points of comparison.
+Descriptions specify when a Skill applies; its body and references provide the method. External tools, plugins, and credentials are supplied by the receiving environment.
 
 ## Installation
 
-Have Codex perform a merge installation according to [`INSTALL.md`](INSTALL.md). The installation must preserve the receiving environment's existing Agents, Skills, MCP servers, plugins, and project configuration. Depending on the cost and acceptance requirements, you may choose whether to test with a brand-new Root and named subagents. If that test is not performed, real runtime loading must be explicitly marked as **unverified**.
+Follow the [installation guide](INSTALL.md) to merge selected content while preserving existing configuration. Verify installed files, host discovery, and real task behavior separately. Clearly report anything not tested.
 
-The default model hierarchy is: Root uses `gpt-5.6-sol`; phase leads and reviewers use `gpt-5.6-terra`; routine execution and evidence gathering use `gpt-5.6-luna`; and the high-speed Worker uses `gpt-5.3-codex-spark`. If the target environment does not provide a corresponding model, the user should confirm how the capability tiers should be mapped rather than replacing models by name alone.
-
-## Repository structure
-
-```text
-.
-├── prompt-lab/                 # Root Base and public maintenance materials
-├── global/AGENTS.md            # Shared execution rules read by every role
-├── agents/                     # Shared Neutral Base, Worker Base, and 10 role TOMLs
-├── skills/                     # 12 system Skills
-├── hooks/                      # PreToolUse guard enforcing fork_turns:none
-├── examples/                   # Configuration-merge and project AGENTS templates
-└── INSTALL.md
-```
-
-## Version boundaries
-
-The Root Base in this repository's Prompt Lab is the authoritative text for the current public release. The maintainer's private Prompt Lab preserves the writing process and complete evolution history. The installed `config.toml` stores only a verbatim runtime mirror; it does not carry version history. The public Worker Base files live in `agents/`. Eight execution-role TOMLs contain the inline mirrors required at runtime, while the two phase roles each maintain a complete, dedicated prompt.
-
-This system does not depend on Python synchronization scripts, resident background processes, or hooks that splice prompts together. The hooks in `hooks/` only enforce the subagent parameter `fork_turns:none`; they do not generate, modify, or assemble prompts. Publishing is an explicit process of copying, parsing, and consistency checking. Real loading verification is performed when required by the acceptance scope and reported separately.
+Historical shared Base files, Root configuration mirrors, and the forced-fork Hook are no longer active installation inputs. They remain accessible through [release history](docs/HISTORY.md). Personal configuration, sessions, memories, and secrets are excluded.
 
 ## License
 
-[MIT](LICENSE)
+Original repository content uses [MIT](LICENSE). Third-party files retain their own licenses and attribution; see [third-party notes](docs/THIRD_PARTY.md).
 
 ---
 

@@ -1,55 +1,6 @@
-model = "gpt-5.6-sol"
-model_reasoning_effort = "medium"
-
-# 所有责任层都会继承这一层，因此只能加载中性共享 Base。
-model_instructions_file = "{{CODEX_HOME}}/agents/shared-runtime-base-instructions.md"
-
-# 安装时用 prompt-lab/codex_base_instruction_5.6.md 的完整正文替换占位符。
-# 这是 Root Base 的运行镜像，不是版本权威源。
-developer_instructions = '''
-{{ROOT_BASE_CONTENT}}
-'''
-
+# Optional settings to merge into the existing [agents] table.
+# Do not replace the user's complete config.toml with this file.
+# Current hosts discover named roles from agents/*.toml; no per-role entries needed.
+# Keep the user's existing limits unless a change is wanted.
 [agents]
-# Root 是第 0 层，阶段负责人是第 1 层，一线工人是第 2 层。
-# 更深的转述会增加信息损失并让 Root 远离一线证据。
-max_depth = 2
-# 十个槽位可组成 3-3-3-1 或 3-3-4，并为独立 Reviewer 或临时责任留位置。
-# 这是上限，不要求任务凑满并发。
 max_concurrent_threads_per_session = 10
-
-[agents.explorer]
-config_file = "agents/explorer.toml"
-
-[agents.web-researcher]
-config_file = "agents/web-researcher.toml"
-
-[agents.research-lead]
-config_file = "agents/research-lead.toml"
-
-[agents.code-executor]
-config_file = "agents/code-executor.toml"
-
-[agents.code-reviewer]
-config_file = "agents/code-reviewer.toml"
-
-[agents.worker]
-config_file = "agents/worker.toml"
-
-[agents.worker-luna]
-config_file = "agents/worker-luna.toml"
-
-[agents.browser-operator]
-config_file = "agents/browser-operator.toml"
-
-[agents.visual-usability-tester]
-config_file = "agents/visual-usability-tester.toml"
-
-[agents.default]
-config_file = "agents/default.toml"
-
-[features]
-multi_agent_v2 = { enabled = true, multi_agent_mode_hint_text = "" }
-
-# Browser Operator 和 Visual Usability Tester 仍要求目标宿主实际提供
-# browser/computer-use 能力。安装前检查可用性和用户授权。

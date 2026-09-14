@@ -1,4 +1,4 @@
 interface:
   display_name: "Code Review"
-  short_description: "Independent evidence-based review for code changes"
+  short_description: "基于实际证据审查代码，需要独立视角时可提议子代理评审"
   default_prompt: "Use $code-review to review this code change with evidence."
