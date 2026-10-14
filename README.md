@@ -77,12 +77,12 @@
 
 角色从独立 TOML 文件加载。当前宿主可发现 `agents/` 中的角色，无需在 `config.toml` 逐一登记。主模型沿用用户选择，角色模型在安装时核对可用性。
 
-## 12 个 Skills
+## 11 个 Skills
 
 | 类别 | Skill |
 | --- | --- |
 | 开发与体验 | `product-development`、`code-development`、`code-review`、`frontend-design` |
-| 调查与判断 | `deep-research`、`search-source-registry`、`company-research-brief`、`xy-axis-thinking` |
+| 调查与判断 | `deep-research`、`search-source-registry`、`xy-axis-thinking` |
 | 工作状态与表达 | `workflow-state-distiller`、`workflow-route-mapper`、`teach-and-explain` |
 | 提示词维护 | `write-instructions-zh` |
 

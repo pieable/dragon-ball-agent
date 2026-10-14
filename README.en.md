@@ -77,12 +77,12 @@ Start from the user’s goal and actual situation. Use research, discussion, sam
 
 Current hosts discover standalone role TOML files from the agent directory. A per-role entry in `config.toml` is not required. Keep the user's main model and check availability of models specified in role files.
 
-## 12 Skills
+## 11 Skills
 
 | Area | Skills |
 | --- | --- |
 | Development and experience | `product-development`, `code-development`, `code-review`, `frontend-design` |
-| Research and judgment | `deep-research`, `search-source-registry`, `company-research-brief`, `xy-axis-thinking` |
+| Research and judgment | `deep-research`, `search-source-registry`, `xy-axis-thinking` |
 | Task state and communication | `workflow-state-distiller`, `workflow-route-mapper`, `teach-and-explain` |
 | Instruction maintenance | `write-instructions-zh` |
 
