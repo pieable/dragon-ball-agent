@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/blader/humanizer",
+  "commit": "225a6f39ac85f76ee48dbad772ea4abe4ed6c9d8",
+  "retrieved_on": "2026-10-05",
+  "files": [
+    {
+      "file": "humanizer.en.md",
+      "url": "https://raw.githubusercontent.com/blader/humanizer/225a6f39ac85f76ee48dbad772ea4abe4ed6c9d8/SKILL.md",
+      "sha256": "0612f1dfb1672b0ea9b97e139bf1f06cabe98d8b27424fe8ff01e1fb4cc99cad",
+      "bytes": 32348
+    },
+    {
+      "file": "LICENSE-humanizer.txt",
+      "url": "https://raw.githubusercontent.com/blader/humanizer/225a6f39ac85f76ee48dbad772ea4abe4ed6c9d8/LICENSE",
+      "sha256": "4ac4810254ab36d45419141aeb8e69bf50652cfafe5b2dab947d06d44e5cbf96",
+      "bytes": 1066
+    }
+  ]
+}

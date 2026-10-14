@@ -1,55 +1,73 @@
 ---
 name: frontend-design
-description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.
+description: 用于设计、制作、评审或调整网页与前端界面，包括工作台、教学页面和信息可视化。将内容、视觉方向、交互与可访问性落实到可操作成品，也用于整理可复用的品牌变量、主题与组件。纯文字解释使用教学 Skill，业务功能与接口实现结合代码开发能力。
 license: Complete terms in LICENSE.txt
 ---
 
-# Frontend Design
+# 前端设计与信息展示
 
-Approach this as the design lead at a small studio known for giving every client a visual identity that could not be mistaken for anyone else's. This client has already rejected proposals that felt templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take one real aesthetic risk you can justify.
+从使用者要理解的内容和要完成的任务出发，把真实内容、视觉设计、操作行为和实现组织成可读、可用的成品。营销页面围绕主要行动建立识别与信任，工作台支持发现、比较和处理对象，教学页面支持关系理解、观察与尝试。形式、密度、动效和实现投入服从当前用途。
 
-## Ground it in the subject
+## 当前依据与任务
 
-If the brief does not pin down what the product or subject is, pin it yourself before designing: name one concrete subject, its audience, and the page's single job, and state your choice. If there's any information in your memory about the human's preferences, context about what they're building, or designs you've made before – use that as a hint. The subject's own world, its materials, instruments, artifacts, and vernacular, is where distinctive choices come from. Build with the brief's real content and subject matter throughout.
+先取得当前页面、项目结构、组件与样式约定、真实内容、用户情景及交付入口。简报未说明主体、受众或主要任务时，从已有材料确定具体对象与页面职责，披露会影响结果的自行选择。已有用户偏好与历史设计可作线索，本次明确要求作为当前依据。
 
-## Design principles
+存在设计系统时先读其使用说明与 tokens，再按需要读取组件、样式和真实素材。尺寸、颜色、字体与状态精确保留来源值，5px 就保留 5px。已有体系决定已确认部分，设计探索用于仍开放的部分。局部修改从当前文件出发，保留其他视觉关系和来源不明的已有内容。
 
-For web designs, the hero is a thesis. Open with the most characteristic thing in the subject's world, in whatever form makes sense for it: a headline, an image, an animation, a live demo, an interactive moment. Be deliberate with your choice: a big number with a small label, supporting stats, and a gradient accent is the template answer, only use if that's truly the best option.
+真实价格、评价、客户身份和统计数字来自实际材料，缺失信息使用明确的待填标记。标志与身份素材取自真实来源，普通图标沿用已有体系。制作过程与检查记录写在任务说明与交流中，成品内容服务使用者。作品本身用于讲解设计或比较方案时，保留理解这些内容所需的理由与条件。
 
-Typography carries the personality of the page. Pair the display and body faces deliberately, not the same families you would reach for on any other project, and set a clear type scale with intentional weights, widths, and spacing. Make the type treatment itself a memorable part of the design, not a neutral delivery vehicle for the content.
+## 设计与制作
 
-Structure is information. Structural devices, numbering, eyebrows, dividers, labels, should encode something true about the content, not decorate it. Many generic designs use numbered markers (01 / 02 / 03), but that's only appropriate if the content actually is a sequence - like a real process or a typed timeline where order carries information the reader needs. Question if choices like numbered markers actually make sense before incorporating them.
+新建或调整整体视觉方向时，先查看已有成熟完整页面、组件实现与成套素材。需要发现或复用这些原件时，读取 [设计原件库](references/design-resource-library.md)，按当前用途查看实际画面并读取相应源码。匹配的完整模板可以直接适配真实内容，保留字体、色彩、图片、组件和布局之间的关系。已有项目的小改从当前实现出发。
 
-Leverage motion deliberately. Think about where and if animation can serve the subject: a page-load sequence, a scroll-triggered reveal, hover micro-interactions, ambient atmosphere. An orchestrated moment usually lands harder than scattered effects; choose what the direction calls for. However, sometimes less is more, and extra animation contributes to the feeling that the design is AI-generated.
+先用真实代表内容确定结构、阅读或操作顺序、字体角色、色彩角色与主要状态，再核对这些选择是否符合当前任务。结构、编号、分隔、层级与留白表达真实的内容关系。内容为顺序过程时才用序号表示先后。
 
-Match complexity to the vision. Maximalist directions need elaborate execution; minimal directions need precision in spacing, type, and detail. Elegance is executing the chosen vision well.
+整体视觉方向尚未确定且影响完整作品时，制作足以比较结构、字体、配色或密度的可见方向，说明各自适用情境与取舍。低保真足以支持决定时先用低保真，候选名称在迭代中保持稳定。已有风格或任务明确时沿当前依据制作。需要品牌识别、新风格或鲜明视觉方向时，读取 [审美方向与视觉身份](references/aesthetic-direction.md)。
 
-Consider written content carefully. Often a design brief may not contain real content, and it's up to you to come up with copy. Copy can make a design feel as templated as the design itself. See the below section on writing for more guidance.
+选择符合项目与交付条件的工具和实现。已有项目继续使用实际 HTML、CSS、框架、组件与运行入口。需要可编辑设计稿或 Figma 操作时读取相应 Figma Skill，制作图片时读取 imagegen。参照、资产、图片编辑和实现交接按 [视觉素材与页面制作](references/visual-production.md) 执行。
 
-## Process: brainstorm, explore, plan, critique, build, critique again
+在展开完整作品前，用真实中文、主图和代表性交互检查关键页面是否容纳内容。制作中查看当前结果，解决层级、溢出、字距、状态和操作问题。CSS 选择器的优先级应清楚，核对类与元素规则是否覆盖了本应保留的间距或样式。改后查看受影响的完整场景。
 
-For calibration: AI-generated design right now clusters around three looks: (1) a warm cream background (near #F4F1EA) with a high-contrast serif display and a terracotta accent; (2) a near-black background with a single bright acid-green or vermilion accent; (3) a broadsheet-style layout with hairline rules, zero border-radius, and dense newspaper-like columns. All three are legitimate for some briefs, but they are defaults rather than choices, and they appear regardless of subject. Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on one of these defaults. Just like a human designer who's hired, there's often a careful balance between doing what you're good at and taking each project as a chance to experiment and learn.
+需要判断整体视觉质量、解释用户所说的“平、乱、挤、像模板”，或对当前页面作实质视觉调整时，读取 [视觉评审与打磨](references/visual-critique.md)。以当前简报和真实画面定位问题。只请求评审时交回发现与依据，已授权修改时修正受影响的结构与样式。普通局部修改检查对应元素及其周围关系。
 
-Work in two passes. First, brainstorm a short design plan based on the human's design brief: create a compact token system with color, type, layout, and signature. Color: describe the palette as 4–6 named hex values. Type: the typefaces for 2+ roles (a characterful display face that's used with restraint, a complementary body face, and a utility face for captions or data if needed). Layout: a layout concept, using one-sentence prose descriptions and ASCII wireframes to ideate and compare. Signature: the single unique element this page will be remembered by that embodies the brief in an appropriate way.
+## 按当前场景读取细则
 
-Then review that plan against the brief before building: if any part of it reads like the generic default you would produce for any similar page (work through a similar prompt to see if you arrive somewhere similar) rather than a choice made for this specific brief — revise that part, say what you changed and why. Only after you've confirmed the relative uniqueness of your design plan should you start to write the code, following the revised plan exactly and deriving every color and type decision from it.
+按任务读取相关文件，并将要求落实到成品与检查。普通小改覆盖受影响部分，需要的规则已经读过且仍有效时沿用。
 
-When writing the code, be careful of structuring your CSS selector specificities. It's easy to generate CSS classes that cancel each other out (especially with a type-based selector like .section and a element-based selector like .cta). This can happen often with paddings/margins between sections.
+| 当前场景 | 读取材料 |
+|---|---|
+| 文字、主题、布局、触控区域、中文与地区格式 | [视觉质量与具体检查](references/visual-quality.md) |
+| 键盘、弹窗、辅助技术、拖动、缩放、认证与动态反馈 | [可访问交互](references/accessibility-interaction.md) |
+| 收集信息、多步骤事务、保存返回、校验与复核 | [表单与任务流程](references/form-workflows.md) |
+| 导航查找、表格、搜索筛选、分页、集合选择与批量动作 | [工作台交互](references/workspace-interactions.md) |
+| 图表、关系图、时间轴、模拟与跨视图联动 | [信息可视化](references/information-visualization.md) |
+| 共享品牌变量、主题、组件和使用说明 | [设计系统的整理与使用](references/design-system.md) |
+| 寻找成熟完整页面、组件源码、字体图片与成套素材 | [设计原件库](references/design-resource-library.md) |
+| 补齐页面行为、多人交接或设计转实现 | [界面设计交接](references/design-handoff.md) |
+| 页面实际显示、资源依赖、操作反馈、离线或运行验收 | [运行体验与完成检查](references/runtime-quality.md) |
+| 整体视觉评审、层级与节奏修正、设计细节打磨 | [视觉评审与打磨](references/visual-critique.md) |
+| 界面文案的必要性、表达与实际行为审查 | [界面文案审查](references/interface-copy.md) |
 
-Try to do a lot of this planning and iteration in your thinking, and only show ideas to the user when you have higher confidence it'll delight them.
+机构模式按其用户、组件、平台和版本使用。标准的符合性等级与例外、性能测量的统计口径、实验的任务条件随规则保留。原文中的示例断点、候选数、页数或等待秒数用于解释原场景，产品取值由当前内容、任务和实际行为确定。
 
-## Restraint and self-critique
+## 与内容及实现负责人配合
 
-Spend your boldness in one place. Let the signature element be the one memorable thing, keep everything around it quiet and disciplined, and cut any decoration that does not serve the brief. Not taking a risk can be a risk itself! Build to a quality floor without announcing it: responsive down to mobile, visible keyboard focus, reduced motion respected. Critique your own work as you build, taking screenshots if your environment supports it – a picture is worth 1000 tokens. Consider Chanel's advice: before leaving the house, take a look in the mirror and remove one accessory. Human creators have memory and always try to do something new, so if you have a space to quickly jot down notes about what you've tried, it can help you in future passes.
+教学或解释作品先读取 [教学与解释](../teach-and-explain/SKILL.md)，同一任务已经完整读取且仍有效时沿用。按其确定的读者、核心关系、必要条件与解释顺序设计。教学负责人决定讲什么、为什么成立、怎样帮助理解与学习，前端负责人完成布局、可见关系、交互和显示检查。视觉或实现改变文字、尺度、数据或解释含义时交内容负责人核对。
 
-## More on writing in design
+业务功能、接口和状态连接需要开发时，结合 code-development 沿真实使用路径完成。多人委派提供准确材料路径、有效决定、交付入口、必须保留的事实与可调整范围，并明确要求接收者读取本 Skill 和适用参考。接收结果后核对真实成品，将变化更新到当前规格和内容中。
 
-Words appear in a design for one reason: to make it easier to understand, and therefore easier to use. They are design material, not decoration. Bring the same intentionality to copy that you would bring to spacing and color. Before writing anything, ask what the design needs to say, and how it can best be said to help the person navigate the experience.
+## 界面文字
 
-Write from the end user's side of the screen. Name things by what people control and recognize, never by how the system is built. A person manages notifications, not webhook config. Describe what something does in plain terms rather than selling it. Being specific is always better than being clever.
+文字帮助用户理解和使用。用用户能识别和控制的对象命名，例如通知而非内部 webhook 配置。按钮写实际动作与必要对象，使用主动表达，如“保存修改”。同一动作在按钮、状态与结果中保持同一名称，点击后果与文案一致。
 
-Use active voice as default. A control should say exactly what happens when it's used: "Save changes," not "Submit." An action keeps the same name through the whole flow, so the button that says "Publish" produces a toast that says "Published." The vocabulary of an interface is the signposting for someone navigating the product. Cohesion and consistency are how people learn their way around.
+标签用于辨识，示例展示输入，链接预告目的地，图注补足关系与条件。语气服从受众和品牌，具体说明用途与结果。失败信息写明原因、可修正内容和继续路径，空状态根据真实原因指向下一步。影响决定的前提留在相关内容中。
 
-Treat failure and emptiness as moments for direction, not mood. Explain what went wrong and how to fix it, in the interface's voice rather than a person's. Errors don't apologize, and they are never vague about what happened. An empty screen is an invitation to act.
+界面文字按严格标准审查。先判断文字在当前位置是否帮助用户辨认对象、理解必要信息或完成操作，再逐句核对表达与实际行为。新增或修改界面文案时，读取 [界面文案审查](references/interface-copy.md)，按其中的教学表达指导完成独立文字审查。完整页面覆盖全部用户可见文案，局部修改覆盖受影响文字、关联状态和邻近内容。
 
-Keep the register conversational and tuned: plain verbs, sentence case, no filler, with tone matched to the brand and the audience. Let each element do exactly one job. A label labels, an example demonstrates, and nothing quietly does double duty.
+## 交付
+
+交付前单独通读本次成品的实际文案，修正必要性、表达或行为对应上的问题，再复查受影响的完整场景。后续整合和实现新增或改动的文字继续执行相同审查，将具体发现、修正及复查结果留在任务检查记录中。
+
+从正常入口打开当前候选，沿代表性的阅读、查找和操作路径检查实际显示与行为，执行 [运行体验与完成检查](references/runtime-quality.md)。修复后重查受影响部分，将证据交给实现、内容与验收负责人。
+
+交回稳定入口、可编辑来源与正式素材、实际检查结果、重要自行选择及具体剩余问题。设计决定已记录、文件已写入与真实运行通过分别依据相应结果报告。美感和阅读舒适度结合用户实际反馈继续调整。

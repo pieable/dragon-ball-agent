@@ -50,25 +50,27 @@
 
 ---
 
-一套面向长期协作的 Codex 提示词体系。主 agent 连续承担用户理解、整体设计、主要实现与最终判断，按任务需要委派边界清楚的工作。
+一套面向长期协作的 Codex 提示词体系。主 agent 与用户共同理解问题、形成判断，持续掌握设计和实际结果，组织执行与验证，并对最终交付负责。
 
 > 社区配置，非 OpenAI 官方项目。角色、模型与工具的实际支持取决于接收环境。
 
 ## 工作方式
 
-从“更新理解 → 补足信息 → 制定下一轮计划 → 执行并判断结果”持续推进。整体路线逐步形成，每轮执行有清楚的问题和判断依据。计划编号记录同一任务的连续投入，简单任务直接处理。
+从用户目标与实际情境出发，通过调查、讨论、小样和使用反馈修正理解，形成决定后连续推进实现与验证。普通细节自主处理，影响方向的重要取舍用具体依据和后果与用户共同决定。
 
 - 产品开发：在想法、实现反馈和使用反馈中形成或重新判断价值、体验、范围与成功标准。
 - 代码开发：沿实际使用路径实现并验证，区分局部测试通过与完整结果。
 - 深度研究：先补齐决策所需的领域框架，再按证据选择候选与深查对象，保留模块级复用价值。
-- 子代理协作：按责任与产物划分工作。已委派的调查不由主 agent 换个来源再做一遍，主 agent 继续承担自己保留的设计、关键代码和集成。
+- 子代理协作：按责任与产物划分工作，执行者连续完成职责内的调查、实现、验证和修正，主 agent 核对决定性原始材料并整合结果。
+- 工作过程：主动记录来龙去脉、全局与当前假设、关键选择、证据及改道，让用户阅读和模型接续使用同一组事实。
+- 任务中的教学：察觉用户知识缺口时，用当前项目讲清必要术语、基础知识与原则，帮助用户准确表达需求和判断结果。
 
 ## 当前结构
 
 | 层次 | 文件 | 作用 |
 | --- | --- | --- |
-| 全局规则 | [global/AGENTS.md](global/AGENTS.md) | 工作循环、权限边界、协作与表达 |
-| 角色 | [agents/](agents/README.md) | 10 个自包含角色定义 |
+| 全局规则 | [global/AGENTS.md](global/AGENTS.md) | 共同理解、推进、权限、协作与表达 |
+| 角色 | [agents/](agents/README.md) | 13 个角色定义及按需方法 |
 | 任务方法 | [skills/](skills/) | 按任务触发的 Skill 与引用资源 |
 | 安装与项目适配 | [INSTALL.md](INSTALL.md)、[examples/](examples/) | 合并安装和项目规则示例 |
 | 发布记录 | [docs/HISTORY.md](docs/HISTORY.md) | 本次变化与旧版入口 |
@@ -81,7 +83,7 @@
 | --- | --- |
 | 开发与体验 | `product-development`、`code-development`、`code-review`、`frontend-design` |
 | 调查与判断 | `deep-research`、`search-source-registry`、`company-research-brief`、`xy-axis-thinking` |
-| 工作状态与表达 | `workflow-state-distiller`、`workflow-route-mapper`、`eli5` |
+| 工作状态与表达 | `workflow-state-distiller`、`workflow-route-mapper`、`teach-and-explain` |
 | 提示词维护 | `write-instructions-zh` |
 
 每个 Skill 的 `description` 负责说明触发条件，正文与引用资源承载具体方法。外部工具、插件及账号凭据需由接收环境提供。

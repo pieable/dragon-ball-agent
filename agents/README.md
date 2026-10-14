@@ -1,22 +1,23 @@
 # 角色定义
 
-本目录包含 10 个角色，每个 TOML 的 `name`、`description` 和 `developer_instructions` 定义其身份、选择条件与责任。当前宿主支持从角色目录直接发现，不以 `config.toml` 中显式引用的条目数判断可用角色数量。
+本目录包含 13 个角色。各 TOML 的 name、description 和 developer_instructions 定义身份、选择条件和责任。以下模型与推理强度来自实际发布文件。
 
-| 角色 | 责任 | 模型 / 推理强度 |
+| 角色 | 调用条件与职责 | 模型 / 推理强度 |
 | --- | --- | --- |
-| `research-lead` | 连续组织大规模网络研究与阶段验收 | `gpt-5.6-terra` / high |
-| `code-executor` | 一个代码模块或功能阶段的实现与验收 | `gpt-5.6-terra` / high |
-| `code-reviewer` | 独立、只读地审查交付候选 | `gpt-5.6-sol` / xhigh |
-| `explorer` | 有界的本地取证 | `gpt-5.6-luna` / medium |
-| `web-researcher` | 有界的网络取证 | `gpt-5.6-luna` / medium |
-| `browser-operator` | 连续完成有界浏览器操作阶段 | `gpt-5.6-luna` / medium |
-| `visual-usability-tester` | 截图与坐标驱动的视觉黑盒测试 | `gpt-5.6-luna` / low |
-| `worker-luna` | 责任与验收清楚的通用执行 | `gpt-5.6-luna` / low |
-| `worker` | 有额度且有明确收益时的快速执行 | `gpt-5.3-codex-spark` / high |
-| `default` | 兼容叶子角色 | 以文件及宿主继承规则为准 |
+| `astra-specialist` | 当前理解已难以解释用户目标与实际结果、或不足以决定下一步时，及时用 GPT-6 Astra 重整现状；也处理明确困难判断。委派交清未决问题、有效决定、实际结果和原始材料入口，保留用户原话、反证、已否决路线与未知。 | `gpt-6-astra` / medium |
+| `code-executor` | 代码阶段负责人。适用于模块方案、共享接口或多项相互依赖的结果仍需持续判断与整合的阶段，负责关键实现、局部委派和阶段验收。 | `gpt-6.1-sol` / high |
+| `default` | 未指定 agent_type 时使用的兼容叶子角色。 | `gpt-6-luna` / medium |
+| `explorer` | 本地取证执行者，围绕一个有界问题隔离读取材料并返回可核验证据。 | `gpt-6-luna` / high |
+| `operator` | 一般浏览器与 Windows 应用界面操作交给此角色，连续完成有界操作并维护当前页面或窗口状态。 | `gpt-6-luna` / medium |
+| `research-lead` | 网络研究阶段负责人，持续掌握关联调查与综合，按需要组织多条取证路线并验收结果。 | `gpt-6.1-sol` / high |
+| `reviewer` | 独立只读代码与文档评审者，可承接完全不涉及代码的文档审查，核对正确性、依据和进度，判断是否适合交付并报告可操作问题。 | `gpt-6.1-sol` / max |
+| `teaching-editor` | 教学与表达负责人：组织知识与学习路径，撰写并调整所有用户可见文字，与视觉负责人共同完成易于理解的解释作品。 | `gpt-6.1-sol` / high |
+| `visual-creator` | 按需承担关键视觉设计：需要新风格、重大设计取舍或关键视觉难点时，用 Astra 制作有区别的可见方向、关键示范和可编辑设计，交视觉负责人展开制作。 | `gpt-6-astra` / medium |
+| `visual-director` | 视觉与交互负责人：按理解任务选择媒介与版式，制作图片参照、页面和交互，与教学负责人共同调整图文并完成实际显示验证。 | `gpt-6.1-sol` / high |
+| `visual-usability-tester` | 可见成品的视觉黑盒可用性测试者。当需要从首次用户视角验证界面、功能和完整操作路径时使用。只用截图和坐标自主完成任务，报告可见缺陷、误解和阻塞。 | `gpt-6-luna` / medium |
+| `web-researcher` | 网络研究执行者，连续完成定向取证或开放探索，沿项目实现和新线索扩展搜索并交回证据与思路。 | `gpt-6-luna` / high |
+| `worker` | 主要通用执行者。在明确用户结果、权限和外部约束内连续承担完整功能或阶段，自行调查、设计内部做法、实现、验证与修正；改变目标或共享约定时交回。 | `gpt-6-luna` / xhigh |
 
-角色的核心指令已内联在 TOML 中，当前安装不依赖额外共享 Base 文件。角色中的宿主特定注释和工具限制描述了维护环境的适配情况，迁移时核对目标版本，不将其理解为所有 Codex 版本的机制保证。
+共同规则见[全局 AGENTS](../global/AGENTS.md)，角色专属正文内联在 TOML 中。Explorer 的按需方法在 explorer-reference/，Worker 的持久执行方法在 worker-reference/。安装时一起复制，并按[安装路径绑定](../INSTALL.md#绑定必读文件的路径)将 Skill 和角色参考的完整前缀分别替换为实际安装目录。
 
-主 agent 持续负责用户理解、整体设计和主要实现。子代理按具体责任接手工作，主 agent 不重复执行已委派责任。主 agent 仍可完成自己保留的关键代码、入口与集成。具体指导见 [全局规则](../global/AGENTS.md)。
-
-模型名称、推理强度和工具可用性需要在接收环境确认。仓库包含角色定义，不保证账号拥有对应模型或插件。安装与验证见 [INSTALL.md](../INSTALL.md)。
+主 agent 持续掌握目标、设计与结果，组织责任清楚的委派，核对决定性原始材料并负责最终交付。执行者在用户授权和验收范围内连续完成职责。安装后核对角色发现、模型与字段支持，再沿实际任务验证。工具与权限来自接收环境。

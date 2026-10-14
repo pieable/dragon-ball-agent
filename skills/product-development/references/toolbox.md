@@ -24,6 +24,8 @@
 
 ## 完善解决方案
 
+- [与用户核对产品理解](refine/shared-understanding.md)：在重要体验或含义未明时，用情景、实例和原型发现理解差异，并将已确认内容带入实现。
+
 - [PR/FAQ](refine/pr-faq.md)：让团队共同看见尚未建成产品的价值、体验和难题。
 - [端到端慢速走查](refine/end-to-end-walkthrough.md)：沿代表性情景发现交互空洞、依赖和实现未知。
 - [产品风险检查](refine/risk-review.md)：按价值、使用、实现和业务条件查找会推翻方案的风险。

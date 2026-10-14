@@ -1,0 +1,3 @@
+interface:
+  display_name: "探索路线图"
+  short_description: "记录 AI 的工作过程，展示当前结果、关键选择与依据，并按阶段回查"

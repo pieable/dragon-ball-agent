@@ -1,7 +1,7 @@
 interface:
   display_name: "Frontend Design"
-  short_description: "构建有明确视觉方向、避免模板化的前端界面"
-  default_prompt: "Use $frontend-design to design a distinctive frontend for this brief."
+  short_description: "设计可读、可操作的网页、工作台与教学界面，落实视觉、交互和信息展示"
+  default_prompt: "使用 $frontend-design，依据真实内容与使用任务完成前端设计、实现交接和实际显示检查。"
 
 policy:
   allow_implicit_invocation: true

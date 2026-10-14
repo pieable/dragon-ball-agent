@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>探索进度</title>
+<link rel="icon" href="data:,">
+<style>
+  :root {
+    --bg: #f3f0e9;
+    --surface: #fbfaf6;
+    --surface-2: #efebe2;
+    --ink: #1e1c19;
+    --ink-2: #4a463f;
+    --muted: #7a7469;
+    --line: #e1dbcf;
+    --now: #1d5f5a;
+    --now-soft: #dcebe8;
+    --ok: #2f7a45;
+    --ok-soft: #e1eee2;
+    --wait: #a86a12;
+    --wait-soft: #f5e9d2;
+    --ask: #c2410c;
+    --ask-soft: #fbe6da;
+    --bad: #b3261e;
+    --shadow: 0 1px 0 rgba(30, 28, 25, .04), 0 6px 18px -10px rgba(30, 28, 25, .18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141619;
+      --surface: #1c1f23;
+      --surface-2: #23272c;
+      --ink: #ece8e0;
+      --ink-2: #c4bfb5;
+      --muted: #8f8a80;
+      --line: #2e3238;
+      --now: #7fc8bf;
+      --now-soft: #1b2f2d;
+      --ok: #7cc58f;
+      --ok-soft: #1c2b20;
+      --wait: #e0ae5c;
+      --wait-soft: #2f2618;
+      --ask: #ff9a6a;
+      --ask-soft: #3a2218;
+      --bad: #f28b82;
+      --shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 8px 20px -12px rgba(0, 0, 0, .6);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.6 "Segoe UI Variable Text", "Segoe UI", -apple-system, "PingFang SC",
+          "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: 16px 16px 32px;
+    min-width: 320px;
+    overflow-anchor: none;
+  }
+  @media (min-width: 440px) { body { padding: 20px 22px 36px; } }
+
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- 顶部：时间与连接 ---------- */
+  .meta {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    font-size: 12.5px; color: var(--muted);
+  }
+  .meta .updated b { color: var(--ink-2); font-weight: 600; }
+  .conn { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; cursor: default; }
+  .conn i {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--muted); display: inline-block;
+  }
+  .conn.ok i { background: var(--ok); }
+  .conn.err i { background: var(--bad); }
+  .conn.err { color: var(--bad); }
+  .stale {
+    margin-top: 4px; font-size: 12.5px; color: var(--wait);
+  }
+  .stale:empty { display: none; }
+
+  /* ---------- 目标 ---------- */
+  /* 目标常显但退到次要：一行小标签 + 正文字号 */
+  .goal { display: flex; align-items: flex-start; gap: 9px; margin: 14px 0 12px; }
+  .eyebrow {
+    flex: none; margin: 2px 0 0; padding: 0 7px; border: 1px solid var(--line); border-radius: 6px;
+    font-size: 11.5px; line-height: 19px; font-weight: 600; letter-spacing: .08em; color: var(--muted);
+  }
+  .goal h1 {
+    margin: 0; font-size: 14.5px; line-height: 1.55; font-weight: 600; color: var(--ink-2);
+    text-wrap: pretty;
+  }
+
+  /* ---------- 是否需要你 ---------- */
+  .ask {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 12px; border-radius: 10px;
+    background: var(--surface-2); color: var(--ink-2);
+    font-size: 13.5px; line-height: 1.5; margin-bottom: 12px;
+  }
+  .ask .dot {
+    flex: none; width: 8px; height: 8px; margin-top: 6px; border-radius: 50%;
+    background: var(--ok);
+  }
+  .ask .sub { color: var(--muted); font-size: 12.5px; }
+  .ask.required {
+    background: var(--ask-soft); color: var(--ink);
+    border: 1.5px solid var(--ask); padding: 14px 14px 14px 12px;
+  }
+  .ask.required .dot { background: var(--ask); animation: pulse 1.8s ease-in-out infinite; }
+  .ask.required .head { font-weight: 650; color: var(--ask); font-size: 13px; letter-spacing: .04em; }
+  .ask.required .q { font-size: 16.5px; font-weight: 600; margin-top: 2px; line-height: 1.45; }
+  .ask .why { color: var(--ink-2); font-size: 13.5px; margin-top: 6px; }
+  .ask ol { margin: 8px 0 0; padding-left: 1.3em; font-size: 14px; }
+  .ask ol li { margin: 2px 0; }
+  .ask .how { margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ask) 45%, transparent); }
+                     50% { box-shadow: 0 0 0 6px transparent; } }
+
+  /* ---------- 卡片 ---------- */
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: var(--shadow); padding: 14px 16px 16px; margin-bottom: 14px;
+    position: relative;
+  }
+  .label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12.5px; font-weight: 600; letter-spacing: .06em; color: var(--muted);
+    margin: 0 0 8px;
+  }
+  .label .count { font-weight: 500; color: var(--muted); letter-spacing: 0; }
+  .fresh-tag {
+    margin-left: auto; font-size: 11px; font-weight: 600; letter-spacing: .04em;
+    color: var(--now); background: var(--now-soft); padding: 1px 7px; border-radius: 99px;
+  }
+  .card.flash { animation: flash 2.2s ease-out; }
+  @keyframes flash { 0% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--now) 45%, transparent), var(--shadow); }
+                     100% { box-shadow: 0 0 0 0 transparent, var(--shadow); } }
+
+  /* 正在做 */
+  .now { border-left: 4px solid var(--now); }
+  .now .label { color: var(--now); }
+  .now .live {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--now);
+    animation: breathe 2.4s ease-in-out infinite;
+  }
+  .now.complete { border-left-color: var(--ok); }
+  .now.complete .label { color: var(--ok); }
+  .now.complete .live { background: var(--ok); animation: none; }
+  .now.waiting { border-left-color: var(--ask); }
+  .now.waiting .label { color: var(--ask); }
+  .now.waiting .live { background: var(--ask); animation: none; }
+  .now.blocked { border-left-color: var(--wait); }
+  .now.blocked .label { color: var(--wait); }
+  .now.blocked .live { background: var(--wait); animation: none; }
+  @keyframes breathe { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+  /* 全页最醒目的文字 */
+  .now h2 {
+    margin: 2px 0 0; font-size: 20px; line-height: 1.42; font-weight: 680; letter-spacing: -.005em;
+    color: var(--ink); text-wrap: pretty;
+  }
+  @media (min-width: 460px) { .now h2 { font-size: 21.5px; } }
+  .now .detail { margin: 8px 0 0; color: var(--ink-2); font-size: 14px; }
+  .now .since { margin-top: 6px; font-size: 12px; color: var(--muted); }
+  .next { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); }
+  .next .label { margin-bottom: 6px; }
+  .next ol { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .next li {
+    counter-increment: n; position: relative; padding-left: 26px; margin: 5px 0;
+    font-size: 14.5px; color: var(--ink-2);
+  }
+  .next li::before {
+    content: counter(n); position: absolute; left: 0; top: 2px;
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid var(--line); color: var(--muted);
+    font-size: 11px; line-height: 15px; text-align: center; font-weight: 600;
+  }
+
+  /* 已确认 / 还在查 */
+  .facts ul { list-style: none; margin: 0; padding: 0; }
+  .facts li { position: relative; padding-left: 26px; margin: 8px 0; font-size: 14.5px; }
+  .facts li .d { display: block; color: var(--muted); font-size: 12.5px; margin-top: 1px; }
+  .facts .ok li::before {
+    content: ""; position: absolute; left: 1px; top: 4px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--ok-soft);
+  }
+  .facts .ok li::after {
+    content: ""; position: absolute; left: 6px; top: 7px; width: 4px; height: 8px;
+    border: solid var(--ok); border-width: 0 2px 2px 0; transform: rotate(45deg);
+  }
+  .facts .wait li::before {
+    content: ""; position: absolute; left: 1px; top: 4px; width: 16px; height: 16px; border-radius: 50%;
+    border: 2px dashed var(--wait); box-sizing: border-box;
+  }
+  .facts .ok .label { color: var(--ok); }
+  .facts .wait .label { color: var(--wait); }
+  .facts .group + .group { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .empty { color: var(--muted); font-size: 13.5px; margin: 4px 0; }
+
+  /* ---------- 分阶段的工作记录（state v3） ---------- */
+  .process { margin-top: 18px; }
+  .process-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .process-head h3 { margin: 0; font-size: 15px; font-weight: 650; }
+  .process-head p { margin: 0; color: var(--muted); font-size: 12px; }
+  .process-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 10px; margin-top: 12px; }
+  .process-controls label { display: grid; gap: 4px; min-width: 0; color: var(--muted); font-size: 12px; }
+  .process-controls select, .process-controls input {
+    width: 100%; min-width: 0; min-height: 38px; padding: 7px 9px;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink);
+    font: inherit; font-size: 13px;
+  }
+  .process-controls select:focus-visible, .process-controls input:focus-visible,
+  .process a:focus-visible, .process summary:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--now) 55%, transparent); outline-offset: 2px;
+  }
+  .process-help { min-height: 1.4em; margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+  .stage-summary {
+    margin: 8px 0 10px; padding: 10px 12px; border: 1px solid var(--line);
+    border-radius: 10px; background: var(--surface-2);
+  }
+  .stage-summary-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .stage-summary h4 { min-width: 0; margin: 0; font-size: 14px; line-height: 1.45; }
+  .stage-summary p { margin: 5px 0 0; color: var(--ink-2); font-size: 13px; overflow-wrap: anywhere; }
+  .process-status {
+    flex: none; padding: 1px 7px; border-radius: 99px; background: var(--surface);
+    color: var(--muted); font-size: 11px; line-height: 1.6; white-space: normal; overflow-wrap: anywhere;
+  }
+  .process-status.active { color: var(--now); background: var(--now-soft); }
+  .process-status.complete { color: var(--ok); background: var(--ok-soft); }
+  .process-status.waiting { color: var(--wait); background: var(--wait-soft); }
+  .process-status.blocked { color: var(--bad); background: color-mix(in srgb, var(--bad) 14%, transparent); }
+  .process-round {
+    scroll-margin-top: 12px; padding: 12px 0; border-top: 1px solid var(--line);
+    overflow-wrap: anywhere;
+  }
+  .round-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 8px; }
+  .round-head h5 { margin: 0; font-size: 14px; line-height: 1.45; }
+  .round-id { color: var(--muted); font-size: 11px; white-space: nowrap; }
+  .round-id a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .round-problem { margin: 6px 0 0; color: var(--ink-2); font-size: 13px; }
+  .round-statuses { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+  .round-statuses .process-status {
+    flex: 0 1 auto; min-width: 0; max-width: 100%; box-sizing: border-box;
+    border: 1px solid var(--line);
+  }
+  .round-key { margin-top: 9px; padding-left: 10px; border-left: 3px solid var(--now); }
+  .round-key + .round-key { margin-top: 7px; border-left-color: var(--wait); }
+  .round-key b { display: block; margin-bottom: 2px; color: var(--muted); font-size: 11px; letter-spacing: .04em; }
+  .round-key p { margin: 0; font-size: 13.5px; color: var(--ink); }
+  .round-relations { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .round-relations span { padding: 2px 7px; border-radius: 6px; background: var(--surface-2); font-size: 11.5px; color: var(--ink-2); }
+  .round-details { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 7px; }
+  .round-details summary { width: fit-content; cursor: pointer; color: var(--now); font-size: 12.5px; }
+  .round-details ul { margin: 6px 0 0; padding-left: 1.2em; }
+  .round-details li { margin: 5px 0; color: var(--ink-2); font-size: 12.5px; overflow-wrap: anywhere; }
+  .round-details li b { color: var(--ink); font-weight: 600; }
+  .round-details a { color: var(--now); overflow-wrap: anywhere; }
+  .process-empty { padding: 12px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  @media (max-width: 420px) {
+    .process-controls { grid-template-columns: 1fr; gap: 7px; }
+    .process-head { align-items: flex-start; flex-direction: column; gap: 2px; }
+    .round-head { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  }
+
+  /* ---------- 路线变化 ---------- */
+  .pivots-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin: 22px 2px 10px;
+  }
+  .pivots-head h3 { margin: 0; font-size: 15px; font-weight: 650; }
+  .pivots-head span { font-size: 12.5px; color: var(--muted); }
+
+  /* 每次改道一张常显的小卡：标题行 → 理由块 → 原来 / 改成 / 结果 */
+  .pivot {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 14px 13px; margin-bottom: 8px;
+  }
+  .pv-head { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+  .pv-no {
+    font-size: 11.5px; font-weight: 700; color: var(--muted);
+    width: 22px; height: 22px; border-radius: 6px; background: var(--surface-2);
+    display: grid; place-items: center;
+  }
+  .pv-title { font-size: 14.5px; font-weight: 600; line-height: 1.4; min-width: 0; }
+  .pv-title small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+  .badge {
+    font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 99px; white-space: nowrap;
+  }
+  .badge.worked { color: var(--ok); background: var(--ok-soft); }
+  .badge.trying { color: var(--wait); background: var(--wait-soft); }
+  .badge.failed { color: var(--bad); background: color-mix(in srgb, var(--bad) 14%, transparent); }
+
+  .pv-why {
+    margin: 10px 0 0; padding: 7px 11px 8px; border-radius: 8px;
+    background: var(--wait-soft); border-left: 3px solid var(--wait);
+    font-size: 14px; line-height: 1.55; color: var(--ink);
+  }
+  .pv-why b {
+    font-size: 11.5px; font-weight: 650; letter-spacing: .06em; color: var(--wait); margin-right: 7px;
+  }
+  .pv-path {
+    display: grid; grid-template-columns: auto 1fr; gap: 3px 10px;
+    margin: 9px 0 0 1px; font-size: 13.5px; line-height: 1.55;
+  }
+  .pv-path dt { font-size: 12px; color: var(--muted); line-height: 21px; white-space: nowrap; }
+  .pv-path dd { margin: 0; min-width: 0; color: var(--ink-2); }
+  .pv-path dd.from { color: var(--muted); }
+  .pv-path dd.to { color: var(--ink); font-weight: 600; }
+  .pv-path dd.worked { color: var(--ok); }
+  .pv-path dd.trying { color: var(--wait); }
+  .pv-path dd.failed { color: var(--bad); }
+
+  /* ---------- 底部 / 状态 ---------- */
+  footer {
+    margin-top: 22px; font-size: 12px; color: var(--muted); line-height: 1.55;
+  }
+  .notice {
+    border: 1px dashed var(--line); border-radius: 12px; padding: 16px; color: var(--ink-2);
+    font-size: 14px; background: var(--surface);
+  }
+  .notice h2 { font-size: 16px; margin: 0 0 6px; }
+  .notice p { margin: 6px 0 0; }
+  .notice code { font-size: 12.5px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="meta">
+  <span class="updated num" id="updated">正在读取进度…</span>
+  <span class="conn" id="conn"><i></i><span id="connText">连接中</span></span>
+</div>
+<div class="stale" id="stale"></div>
+
+<main id="app" hidden>
+  <header class="goal">
+    <p class="eyebrow" title="这次探索要做成的事">目标</p>
+    <h1 id="goal"></h1>
+  </header>
+
+  <section id="ask" class="ask" aria-live="polite"></section>
+
+  <section class="card now" id="nowCard">
+    <p class="label"><span class="live"></span><span id="nowLabel">正在做</span></p>
+    <h2 id="nowDoing"></h2>
+    <p class="detail" id="nowDetail"></p>
+    <div class="since num" id="nowSince"></div>
+    <div class="next" id="nextBox">
+      <p class="label">接下来</p>
+      <ol id="nextList"></ol>
+    </div>
+  </section>
+
+  <section class="card facts" id="factsCard">
+    <div class="group ok">
+      <p class="label">已确认 <span class="count num" id="okCount"></span></p>
+      <ul id="okList"></ul>
+    </div>
+    <div class="group wait">
+      <p class="label">还在查 <span class="count num" id="waitCount"></span></p>
+      <ul id="waitList"></ul>
+    </div>
+  </section>
+
+  <section class="card process" id="processSec" hidden aria-labelledby="processHeading">
+    <div class="process-head">
+      <h3 id="processHeading">工作过程</h3>
+      <p id="processCount"></p>
+    </div>
+    <div class="process-controls">
+      <label for="stageSelect">查看阶段
+        <select id="stageSelect" data-focus-key="stage-select"></select>
+      </label>
+      <label for="processSearch">查找阶段或轮次
+        <input id="processSearch" data-focus-key="process-search" type="search" autocomplete="off" placeholder="输入关键词">
+      </label>
+    </div>
+    <p class="process-help" id="processHelp" aria-live="polite"></p>
+    <div class="stage-summary" id="stageSummary">
+      <span class="stage-anchor" aria-hidden="true"></span>
+      <div class="stage-summary-head">
+        <h4 id="stageTitle"></h4>
+        <span class="process-status" id="stageStatus"></span>
+      </div>
+      <p id="stageDescription"></p>
+    </div>
+    <div id="roundList"></div>
+  </section>
+
+  <section id="pivotsSec">
+    <div class="pivots-head">
+      <h3>路线怎么变过</h3>
+      <span id="pivotsHint"></span>
+    </div>
+    <div id="pivotList"></div>
+  </section>
+</main>
+
+<div class="notice" id="notice" hidden></div>
+
+<footer>
+  上方的“内容更新于”才是进度最后一次变化的时间；右上角的“已连接”只表示页面能读到进度文件。
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var POLL_MS = 3000;
+  var STALE_MIN = 30;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var lastText = null;
+  var state = null;
+  var lastReadAt = null;
+  var prevSections = {};
+  var hasRenderedState = false;
+  var processStageId = null;
+  var processQuery = "";
+  var stageBeforeFilter = null;
+  var processOpenDetails = {};
+  var processFocusKey = null;
+  var processScrollY = 0;
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function parseTime(s) {
+    if (!s) return null;
+    var d = new Date(s);
+    return isNaN(d) ? null : d;
+  }
+  function clock(d, withSec) {
+    return pad(d.getHours()) + ":" + pad(d.getMinutes()) + (withSec ? ":" + pad(d.getSeconds()) : "");
+  }
+  function sameDay(a, b) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+  function absTime(d) {
+    var now = new Date();
+    if (sameDay(d, now)) return "今天 " + clock(d);
+    var y = new Date(now); y.setDate(now.getDate() - 1);
+    if (sameDay(d, y)) return "昨天 " + clock(d);
+    var s = (d.getMonth() + 1) + "月" + d.getDate() + "日 " + clock(d);
+    return d.getFullYear() === now.getFullYear() ? s : d.getFullYear() + "年" + s;
+  }
+  function relTime(d) {
+    var sec = (Date.now() - d.getTime()) / 1000;
+    if (sec < -60) return "时间在未来，可能填写有误";
+    if (sec < 60) return "刚刚";
+    var min = Math.floor(sec / 60);
+    if (min < 60) return min + " 分钟前";
+    var h = Math.floor(min / 60);
+    if (h < 24) return h + " 小时" + (min % 60 >= 10 && h < 3 ? " " + (min % 60) + " 分" : "") + "前";
+    return Math.floor(h / 24) + " 天前";
+  }
+  function durText(min) {
+    if (min < 60) return min + " 分钟";
+    var h = Math.floor(min / 60), m = min % 60;
+    return h + " 小时" + (m ? " " + m + " 分钟" : "");
+  }
+  function arr(x) { return Array.isArray(x) ? x : []; }
+  function txt(x) { return typeof x === "string" ? x : (x && typeof x.text === "string" ? x.text : ""); }
+
+  /* ---------- 读取 ---------- */
+  function readFile() {
+    var url = "state.json?t=" + Date.now();
+    if (window.fetch) {
+      return fetch(url, { cache: "no-store" }).then(function (r) {
+        if (!r.ok && r.status !== 0) throw new Error("HTTP " + r.status);
+        return r.text();
+      }).catch(function () { return readXhr(url); });
+    }
+    return readXhr(url);
+  }
+  function readXhr(url) {
+    return new Promise(function (resolve, reject) {
+      var x = new XMLHttpRequest();
+      x.open("GET", url, true);
+      x.onload = function () {
+        if (x.status === 200 || (x.status === 0 && x.responseText)) resolve(x.responseText);
+        else reject(new Error("status " + x.status));
+      };
+      x.onerror = function () { reject(new Error("network")); };
+      x.send();
+    });
+  }
+
+  function tick() {
+    readFile().then(function (text) {
+      lastReadAt = new Date();
+      var data;
+      try { data = JSON.parse(text); }
+      catch (e) { setConn("err", "文件格式有误", "state.json 暂时不是有效的 JSON，可能正在被改写。显示的是上一次读到的内容。"); return; }
+      setConn("ok", "已连接", "每 " + POLL_MS / 1000 + " 秒自动读取一次 state.json；上次读取 " + clock(lastReadAt, true));
+      if (text !== lastText) {
+        lastText = text;
+        state = data;
+        render(data);
+      }
+      renderTimes();
+    }).catch(function () {
+      setConn("err", "读不到进度文件",
+        "暂时读不到 state.json。" + (lastReadAt ? "下面是 " + clock(lastReadAt, true) + " 读到的内容。" : ""));
+      if (!state) showNotice();
+    });
+  }
+
+  function setConn(kind, label, title) {
+    var c = $("conn");
+    c.className = "conn " + kind;
+    $("connText").textContent = label;
+    c.title = title;
+  }
+
+  function showNotice() {
+    var n = $("notice");
+    clear(n);
+    n.appendChild(el("h2", null, "还没读到进度"));
+    n.appendChild(el("p", null, "这个页面会从同一个文件夹里的 state.json 读取 Codex 的进度，读到后会自动显示，不用手动刷新。"));
+    if (location.protocol === "file:") {
+      var p = el("p");
+      p.appendChild(document.createTextNode("如果一直停在这里，可能是浏览器不允许直接打开的网页读取本地文件，需要由 Codex 用本机方式打开这个面板。"));
+      n.appendChild(p);
+    }
+    n.hidden = false;
+    $("updated").textContent = "尚未读到内容";
+  }
+
+  /* ---------- 绘制 ---------- */
+  function render(s) {
+    $("notice").hidden = true;
+    $("app").hidden = false;
+    var processUi = captureProcessUI();
+    var navigateInitialHash = !hasRenderedState && !!hashTarget();
+
+    var sections = {
+      goal: JSON.stringify(s.goal),
+      ask: JSON.stringify(s.needsYou),
+      now: JSON.stringify([s.now, s.next]),
+      facts: JSON.stringify([s.confirmed, s.open]),
+      pivots: JSON.stringify(s.pivots),
+      process: JSON.stringify(s.stages)
+    };
+
+    $("goal").textContent = s.goal || "（还没写整体目标）";
+    renderAsk(s.needsYou || {});
+    renderNow(s.now || {}, arr(s.next));
+    renderFacts(arr(s.confirmed), arr(s.open));
+    renderProcess(arr(s.stages), processUi);
+    renderPivots(arr(s.pivots));
+
+    var first = !Object.keys(prevSections).length;
+    if (!first) {
+      if (sections.now !== prevSections.now) markFresh($("nowCard"));
+      if (sections.facts !== prevSections.facts) markFresh($("factsCard"));
+    }
+    prevSections = sections;
+    hasRenderedState = true;
+    restoreProcessUI(processUi, navigateInitialHash);
+  }
+
+  function stageSlug(id) {
+    var value = String(id == null ? "" : id);
+    var codepoints = [];
+    for (var i = 0; i < value.length;) {
+      var point = value.codePointAt(i);
+      codepoints.push(point.toString(16));
+      i += point > 0xFFFF ? 2 : 1;
+    }
+    return "u" + codepoints.join("~");
+  }
+  function legacySlug(id) {
+    return String(id || "").replace(/[^A-Za-z0-9_-]/g, "-").replace(/-+/g, "-");
+  }
+  function stageDomId(id) { return "stage~" + stageSlug(id); }
+  function roundDomId(id) { return "round~" + stageSlug(id); }
+  function legacyStageDomId(id) { return "stage-" + legacySlug(id); }
+  function legacyRoundDomId(id) { return "round-" + legacySlug(id); }
+  function textOf(value) {
+    if (typeof value === "string") return value;
+    if (value && typeof value.summary === "string") return value.summary;
+    if (value && typeof value.text === "string") return value.text;
+    return "";
+  }
+  function processText(stage) {
+    var parts = [stage && stage.id, stage && stage.title, stage && stage.status, stage && stage.summary];
+    arr(stage && stage.rounds).forEach(function (r) {
+      parts.push(r && r.id, r && r.title, r && r.problem, r && r.result, r && r.reason,
+        r && r.verification, r && r.routeStatus);
+      arr(r && r.actions).forEach(function (v) { parts.push(textOf(v)); });
+      arr(r && r.relations).forEach(function (v) { parts.push(v && v.type, v && v.target, v && v.label); });
+      arr(r && r.evidence).forEach(function (v) { parts.push(v && v.label, v && v.summary, v && v.href); });
+    });
+    return parts.filter(Boolean).join(" ").toLocaleLowerCase();
+  }
+  function stageMatches(stage, query) { return !query || processText(stage).indexOf(query) >= 0; }
+  function roundMatches(round, query) {
+    if (!query) return true;
+    var parts = [round && round.id, round && round.title, round && round.problem,
+      round && round.result, round && round.reason, round && round.verification, round && round.routeStatus];
+    arr(round && round.actions).forEach(function (v) { parts.push(textOf(v)); });
+    arr(round && round.relations).forEach(function (v) { parts.push(v && v.type, v && v.target, v && v.label); });
+    arr(round && round.evidence).forEach(function (v) { parts.push(v && v.label, v && v.summary, v && v.href); });
+    return parts.filter(Boolean).join(" ").toLocaleLowerCase().indexOf(query) >= 0;
+  }
+  function captureProcessUI() {
+    var box = $("processSec");
+    if (!box) return {};
+    if ($("stageSelect").value) processStageId = $("stageSelect").value;
+    var activeElement = document.activeElement;
+    processFocusKey = activeElement && box.contains(activeElement)
+      ? activeElement.getAttribute("data-focus-key") || null
+      : null;
+    var search = $("processSearch");
+    if (search && search.value !== processQuery) processQuery = search.value.trim().toLocaleLowerCase();
+    box.querySelectorAll("details[data-detail-key]").forEach(function (d) {
+      processOpenDetails[d.dataset.detailKey] = d.open;
+    });
+    processScrollY = window.scrollY || 0;
+    return { focusKey: processFocusKey, scrollY: processScrollY };
+  }
+  function restoreProcessUI(ui, navigateToHash) {
+    if (!ui) return;
+    if (ui.focusKey) {
+      var nodes = $("processSec").querySelectorAll("[data-focus-key]");
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].getAttribute("data-focus-key") === ui.focusKey) {
+          nodes[i].focus({ preventScroll: true });
+          break;
+        }
+      }
+    }
+    var target = navigateToHash ? hashTarget() : null;
+    var mapped = target ? stageForHash(arr(state && state.stages), target) : null;
+    var targetId = mapped && !mapped.ambiguous ? mapped.domId : null;
+    if (targetId && document.getElementById(targetId)) {
+      setTimeout(function () {
+        var n = document.getElementById(targetId);
+        if (n) window.scrollTo(0, window.scrollY + n.getBoundingClientRect().top - 12);
+      }, 0);
+    } else if (ui.scrollY != null) {
+      window.scrollTo(0, ui.scrollY);
+    }
+  }
+  function hashTarget() {
+    var h = location.hash.slice(1);
+    return h && (/^(round|stage)~u(?:[0-9a-f]+(?:~[0-9a-f]+)*)?$/.test(h) || /^(round|stage)-[A-Za-z0-9_-]+$/.test(h)) ? h : null;
+  }
+  function stageForHash(stages, target) {
+    if (!target) return null;
+    var matches = [];
+    for (var i = 0; i < stages.length; i++) {
+      var stage = stages[i] || {};
+      if (stageDomId(stage.id) === target) matches.push({ stage: stage, round: null, domId: stageDomId(stage.id) });
+      var rounds = arr(stage.rounds);
+      for (var j = 0; j < rounds.length; j++) {
+        if (roundDomId(rounds[j] && rounds[j].id) === target) {
+          matches.push({ stage: stage, round: rounds[j], domId: roundDomId(rounds[j] && rounds[j].id) });
+        }
+      }
+    }
+    if (matches.length === 1) return matches[0];
+    if (matches.length > 1) return { ambiguous: true, target: target, canonical: true };
+
+    if (/^(stage|round)-/.test(target)) {
+      for (var k = 0; k < stages.length; k++) {
+        var oldStage = stages[k] || {};
+        if (legacyStageDomId(oldStage.id) === target) {
+          matches.push({ stage: oldStage, round: null, domId: stageDomId(oldStage.id) });
+        }
+        arr(oldStage.rounds).forEach(function (round) {
+          if (legacyRoundDomId(round && round.id) === target) {
+            matches.push({ stage: oldStage, round: round, domId: roundDomId(round && round.id) });
+          }
+        });
+      }
+      if (matches.length === 1) return matches[0];
+      if (matches.length > 1) return { ambiguous: true, target: target, canonical: false };
+    }
+    return null;
+  }
+  function statusClass(value) {
+    var s = String(value || "").toLocaleLowerCase();
+    if (s === "active" || s === "in_progress" || s.indexOf("进行") >= 0) return "active";
+    if (s === "complete" || s.indexOf("完成") >= 0) return "complete";
+    if (s === "waiting" || s.indexOf("等待") >= 0) return "waiting";
+    if (s === "blocked" || s.indexOf("受阻") >= 0 || s.indexOf("失败") >= 0) return "blocked";
+    return "";
+  }
+  function addTextPair(parent, label, value, cls) {
+    var content = textOf(value);
+    if (!content) return;
+    var block = el("div", "round-key" + (cls ? " " + cls : ""));
+    block.appendChild(el("b", null, label));
+    block.appendChild(el("p", null, content));
+    parent.appendChild(block);
+  }
+  function allowedEvidenceHref(value, allStages) {
+    if (typeof value !== "string") return null;
+    var raw = value.trim();
+    if (/^https?:\/\//i.test(raw)) {
+      try {
+        var url = new URL(raw);
+        return url.protocol === "http:" || url.protocol === "https:" ? url.href : null;
+      } catch (_) { return null; }
+    }
+    if (raw.charAt(0) === "#") {
+      var target = raw.slice(1);
+      var match = stageForHash(allStages, target);
+      return match && !match.ambiguous ? raw : null;
+    }
+    return null;
+  }
+  function renderProcess(stages, ui) {
+    var sec = $("processSec");
+    if (!stages.length) { sec.hidden = true; return; }
+    sec.hidden = false;
+
+    var target = stageForHash(stages, hashTarget());
+    var ambiguousHash = !!(target && target.ambiguous);
+    if (ambiguousHash) target = null;
+    if (target && !processStageId) processStageId = String(target.stage.id || "");
+    if (!processStageId || !stages.some(function (s) { return String(s.id || "") === processStageId; })) {
+      var current = stages.filter(function (s) { return statusClass(s && s.status) === "active"; });
+      processStageId = current.length ? String(current[current.length - 1].id || "") : String(stages[stages.length - 1].id || "");
+    }
+
+    var query = processQuery.trim().toLocaleLowerCase();
+    var visibleStages = stages.filter(function (s) { return stageMatches(s, query); });
+    if (query && visibleStages.length && !visibleStages.some(function (s) { return String(s.id || "") === processStageId; })) {
+      processStageId = String(visibleStages[0].id || "");
+    }
+    if (!query && stageBeforeFilter) {
+      if (stages.some(function (s) { return String(s.id || "") === stageBeforeFilter; })) processStageId = stageBeforeFilter;
+      stageBeforeFilter = null;
+    }
+
+    var select = $("stageSelect");
+    clear(select);
+    visibleStages.forEach(function (stage) {
+      var option = el("option", null, (stage.title || stage.id || "未命名阶段") +
+        " · " + (stage.status || "状态未标注") + " · " + arr(stage.rounds).length + " 轮");
+      option.value = String(stage.id || "");
+      select.appendChild(option);
+    });
+    select.value = processStageId;
+    $("processSearch").value = processQuery;
+
+    var allRounds = stages.reduce(function (n, s) { return n + arr(s && s.rounds).length; }, 0);
+    $("processCount").textContent = stages.length + " 个阶段 · " + allRounds + " 轮记录";
+    var help = $("processHelp");
+    if (!visibleStages.length) {
+      $("stageSummary").hidden = true;
+      clear($("roundList"));
+      help.textContent = "没有找到匹配记录；清除搜索词即可恢复完整阶段列表。";
+      $("stageSelect").disabled = true;
+      return;
+    }
+    select.disabled = false;
+    var selected = stages.find(function (s) { return String(s.id || "") === processStageId; }) || visibleStages[0];
+    processStageId = String(selected.id || "");
+    var stageId = processStageId;
+    $("stageSummary").hidden = false;
+    var stageAnchor = $("stageSummary").querySelector(".stage-anchor");
+    stageAnchor.id = stageDomId(stageId);
+    $("stageTitle").textContent = (selected.id ? selected.id + "｜" : "") + (selected.title || "未命名阶段");
+    $("stageDescription").textContent = textOf(selected.summary);
+    $("stageDescription").hidden = !textOf(selected.summary);
+    var stageStatus = $("stageStatus");
+    stageStatus.className = "process-status " + statusClass(selected.status);
+    stageStatus.textContent = selected.status || "状态未标注";
+
+    var stageTextHit = query && [selected.id, selected.title, selected.summary].filter(Boolean)
+      .join(" ").toLocaleLowerCase().indexOf(query) >= 0;
+    var matchedRounds = arr(selected.rounds).filter(function (r) { return roundMatches(r, query); });
+    var visibleRounds = !query ? arr(selected.rounds) : (matchedRounds.length ? matchedRounds : stageTextHit ? arr(selected.rounds) : []);
+    clear($("roundList"));
+    if (ambiguousHash) help.textContent = "这个旧定位链接对应多个阶段或轮次，无法判断目标；请从列表打开记录并使用新的定位链接。";
+    else if (query && !stageTextHit) help.textContent = "匹配到 " + visibleRounds.length + " 轮；清除搜索词可恢复该阶段全部记录。";
+    else if (query) help.textContent = "显示匹配阶段及其轮次；搜索只筛选显示，不修改记录。";
+    else help.textContent = "阶段摘要常显；理由、结果与验证分开显示，动作和依据可按需展开。";
+    if (!visibleRounds.length) {
+      $("roundList").appendChild(el("p", "process-empty", query ? "这个阶段没有匹配的轮次。" : "这个阶段还没有轮次记录。"));
+      return;
+    }
+
+    visibleRounds.forEach(function (round, index) {
+      round = round || {};
+      var card = el("article", "process-round");
+      if (round.id) card.id = roundDomId(round.id);
+      var head = el("div", "round-head");
+      var title = el("h5", null, (round.id ? round.id + "｜" : "") + (round.title || "未命名轮次"));
+      head.appendChild(title);
+      if (round.id) {
+        var linkWrap = el("span", "round-id num");
+        var permalink = el("a", null, "定位链接");
+        permalink.href = "#" + roundDomId(round.id);
+        permalink.setAttribute("data-focus-key", "round-link-" + stageSlug(round.id));
+        linkWrap.appendChild(permalink);
+        head.appendChild(linkWrap);
+      }
+      card.appendChild(head);
+      if (textOf(round.problem)) card.appendChild(el("p", "round-problem", textOf(round.problem)));
+
+      var statuses = el("div", "round-statuses");
+      if (round.verification) {
+        var verified = el("span", "process-status", "验证：" + textOf(round.verification));
+        statuses.appendChild(verified);
+      }
+      if (round.routeStatus) {
+        var route = el("span", "process-status " + statusClass(round.routeStatus), "路线状态：" + textOf(round.routeStatus));
+        statuses.appendChild(route);
+      }
+      if (statuses.children.length) card.appendChild(statuses);
+
+      addTextPair(card, "为什么这样选择", round.reason, "reason");
+      addTextPair(card, "得到的结果", round.result, "result");
+
+      var relations = arr(round.relations).filter(function (r) { return r && (r.type || r.target || r.label); });
+      if (relations.length) {
+        var rels = el("div", "round-relations");
+        relations.forEach(function (rel, relIndex) {
+          var label = [rel.type, rel.label || rel.target].filter(Boolean).join("：");
+          var relRoundId = String(rel.target || "");
+          var known = stages.some(function (st) { return arr(st.rounds).some(function (r) { return String(r && r.id || "") === relRoundId; }); });
+          if (known) {
+            var a = el("a", null, label || relRoundId);
+            a.href = "#" + roundDomId(relRoundId);
+            a.setAttribute("data-focus-key", "relation-" + stageSlug(round.id) + "-" + relIndex);
+            rels.appendChild(a);
+          } else rels.appendChild(el("span", null, label));
+        });
+        card.appendChild(rels);
+      }
+
+      var actions = arr(round.actions).map(textOf).filter(Boolean);
+      var evidence = arr(round.evidence).filter(function (ev) { return ev && (ev.label || ev.summary || ev.href); });
+      if (actions.length || evidence.length) {
+        var details = el("details", "round-details");
+        var detailKey = String(round.id || (stageId + "-" + index)) + "-detail";
+        details.dataset.detailKey = detailKey;
+        details.open = !!processOpenDetails[detailKey];
+        var summary = el("summary", null, "查看动作与依据摘要");
+        summary.setAttribute("data-focus-key", "detail-" + stageSlug(detailKey));
+        details.appendChild(summary);
+        if (actions.length) {
+          var actionList = el("ul");
+          actions.forEach(function (action) { actionList.appendChild(el("li", null, action)); });
+          details.appendChild(el("b", null, "实际动作"));
+          details.appendChild(actionList);
+        }
+        if (evidence.length) {
+          var evidenceList = el("ul");
+          evidence.forEach(function (ev) {
+            var li = el("li");
+            if (ev.label) li.appendChild(el("b", null, ev.label + "："));
+            if (ev.summary) li.appendChild(document.createTextNode(ev.summary + (ev.href ? " " : "")));
+            if (ev.href) {
+              var href = allowedEvidenceHref(ev.href, stages);
+              if (href) {
+                var a = el("a", null, ev.href);
+                a.href = href;
+                if (/^https?:/i.test(href)) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+                li.appendChild(a);
+              } else li.appendChild(el("span", null, ev.href));
+            }
+            evidenceList.appendChild(li);
+          });
+          details.appendChild(el("b", null, "取得的依据"));
+          details.appendChild(evidenceList);
+        }
+        card.appendChild(details);
+      }
+      $("roundList").appendChild(card);
+    });
+  }
+
+  function markFresh(card) {
+    var old = card.querySelector(".fresh-tag");
+    if (old) old.remove();
+    var tag = el("span", "fresh-tag", "刚有变化");
+    card.querySelector(".label").appendChild(tag);
+    card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
+    setTimeout(function () { if (tag.parentNode) tag.remove(); }, 120000);
+  }
+
+  function renderAsk(a) {
+    var box = $("ask");
+    clear(box);
+    box.appendChild(el("span", "dot"));
+    var body = el("div");
+    if (a.required) {
+      box.className = "ask required";
+      body.appendChild(el("div", "head", "需要你回答"));
+      body.appendChild(el("div", "q", a.question || a.summary || "Codex 在等你的决定"));
+      if (a.why) body.appendChild(el("div", "why", a.why));
+      var opts = arr(a.options).map(txt).filter(Boolean);
+      if (opts.length) {
+        var ol = el("ol");
+        opts.forEach(function (o) { ol.appendChild(el("li", null, o)); });
+        body.appendChild(ol);
+      }
+      body.appendChild(el("div", "how", "直接在 Codex 聊天框里回复即可。"));
+    } else {
+      box.className = "ask";
+      body.appendChild(document.createTextNode(a.summary || "现在不需要你回答或决定什么"));
+      if (a.sub !== "") body.appendChild(el("span", "sub", a.sub || " · 需要你时这里会变醒目"));
+    }
+    box.appendChild(body);
+  }
+
+  function renderNow(n, next) {
+    var statuses = { active: "正在做", waiting: "等你决定", blocked: "暂时受阻", complete: "已完成" };
+    var status = statuses[n.status] ? n.status : "active";
+    $("nowCard").className = "card now " + status;
+    $("nowLabel").textContent = statuses[status];
+    $("nowDoing").textContent = n.doing || "（没有写明）";
+    $("nowDetail").textContent = n.detail || "";
+    $("nowDetail").hidden = !n.detail;
+    $("nowSince").dataset.since = n.since || "";
+    var list = $("nextList");
+    clear(list);
+    next.map(txt).filter(Boolean).forEach(function (t) { list.appendChild(el("li", null, t)); });
+    $("nextBox").hidden = !list.children.length;
+  }
+
+  function fillList(ul, items, emptyText) {
+    clear(ul);
+    var n = 0;
+    items.forEach(function (it) {
+      var t = txt(it);
+      if (!t) return;
+      var li = el("li", null, t);
+      var d = it && (it.how || it.detail);
+      if (d) li.appendChild(el("span", "d", d));
+      ul.appendChild(li); n++;
+    });
+    if (!n) ul.appendChild(el("p", "empty", emptyText));
+    return n;
+  }
+
+  function renderFacts(ok, open) {
+    var a = fillList($("okList"), ok, "还没有确认的结果");
+    var b = fillList($("waitList"), open, "目前没有悬而未决的问题");
+    $("okCount").textContent = a ? a + " 项" : "";
+    $("waitCount").textContent = b ? b + " 项" : "";
+  }
+
+  var OUTCOME = {
+    worked: "后来走通了",
+    trying: "还在验证",
+    failed: "没走通"
+  };
+
+  function renderPivots(pivots) {
+    var sec = $("pivotsSec"), list = $("pivotList");
+    if (!pivots.length) { sec.hidden = true; return; }
+    sec.hidden = false;
+    $("pivotsHint").textContent = "共 " + pivots.length + " 次 · 最新在上";
+
+    clear(list);
+    for (var i = pivots.length - 1; i >= 0; i--) {
+      var p = pivots[i] || {};
+      var card = el("article", "pivot");
+
+      var head = el("div", "pv-head");
+      head.appendChild(el("span", "pv-no num", String(i + 1)));
+      var title = el("span", "pv-title", p.title || p.to || "路线调整");
+      var when = parseTime(p.at);
+      if (when) title.appendChild(el("small", "num", absTime(when)));
+      head.appendChild(title);
+      var oc = OUTCOME[p.outcome] ? p.outcome : "trying";
+      head.appendChild(el("span", "badge " + oc, OUTCOME[oc]));
+      card.appendChild(head);
+
+      if (p.why) {                                  // 理由常显，不用点开
+        var why = el("p", "pv-why");
+        why.appendChild(el("b", null, "为什么改"));
+        why.appendChild(document.createTextNode(p.why));
+        card.appendChild(why);
+      }
+
+      var dl = el("dl", "pv-path");
+      [["原来", p.from, "from"],
+       ["改成", p.to, "to"],
+       ["结果", p.result, oc]].forEach(function (r) {
+        if (!r[1]) return;
+        dl.appendChild(el("dt", null, r[0]));
+        dl.appendChild(el("dd", r[2], r[1]));
+      });
+      if (dl.children.length) card.appendChild(dl);
+      list.appendChild(card);
+    }
+  }
+
+  /* 相对时间每 20 秒刷新一次，不依赖文件是否变化 */
+  function renderTimes() {
+    if (!state) return;
+    var up = $("updated");
+    clear(up);
+    var t = parseTime(state.updatedAt);
+    if (t) {
+      up.appendChild(document.createTextNode("内容更新于 "));
+      up.appendChild(el("b", null, absTime(t)));
+      up.appendChild(document.createTextNode(" · " + relTime(t)));
+      up.title = "这是 Codex 最后一次改动进度内容的时间";
+      var min = Math.floor((Date.now() - t.getTime()) / 60000);
+      $("stale").textContent = (!state.now || !state.now.status || state.now.status === "active") && min >= STALE_MIN
+        ? "已经 " + durText(min) + " 没有新内容；Codex 可能在做一段耗时的步骤。"
+        : "";
+    } else {
+      up.textContent = "进度没有标注更新时间";
+      $("stale").textContent = "";
+    }
+    var active = !state.now || !state.now.status || state.now.status === "active";
+    var since = active ? parseTime($("nowSince").dataset.since) : null;
+    $("nowSince").textContent = since ? "从 " + absTime(since) + " 开始 · 已进行 " + durText(Math.max(0, Math.floor((Date.now() - since.getTime()) / 60000))) : "";
+  }
+
+  $("stageSelect").addEventListener("change", function () {
+    var ui = captureProcessUI();
+    processStageId = this.value;
+    if (processQuery) stageBeforeFilter = processStageId;
+    renderProcess(arr(state && state.stages), ui);
+    if (processStageId) history.replaceState(null, "", "#" + stageDomId(processStageId));
+    restoreProcessUI(ui, true);
+  });
+  $("processSearch").addEventListener("input", function () {
+    var next = this.value.trim().toLocaleLowerCase();
+    if (!processQuery && next) stageBeforeFilter = processStageId;
+    processQuery = next;
+    var ui = captureProcessUI();
+    renderProcess(arr(state && state.stages), ui);
+    restoreProcessUI(ui);
+  });
+  window.addEventListener("hashchange", function () {
+    if (!state) return;
+    var match = stageForHash(arr(state.stages), hashTarget());
+    if (!match) return;
+    if (match.ambiguous) {
+      $("processHelp").textContent = "这个旧定位链接对应多个阶段或轮次，无法判断目标；请从列表打开记录并使用新的定位链接。";
+      return;
+    }
+    var ui = captureProcessUI();
+    processStageId = String(match.stage.id || "");
+    processQuery = "";
+    stageBeforeFilter = null;
+    renderProcess(arr(state.stages), ui);
+    restoreProcessUI({ focusKey: ui.focusKey, scrollY: null }, true);
+  });
+
+  tick();
+  setInterval(tick, POLL_MS);
+  setInterval(renderTimes, 20000);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) tick(); });
+})();
+</script>
+</body>
+</html>

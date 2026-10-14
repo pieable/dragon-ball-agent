@@ -1,4 +1,4 @@
 interface:
-  display_name: "Code Review"
-  short_description: "基于实际证据审查代码，需要独立视角时可提议子代理评审"
-  default_prompt: "Use $code-review to review this code change with evidence."
+  display_name: "代码与文档评审"
+  short_description: "审查代码或纯文档的正确性、依据和进度，需独立视角时可直接调用只读 reviewer"
+  default_prompt: "Use $code-review to review the specified code or documents against their requirements and supporting evidence; documentation review may involve no code."

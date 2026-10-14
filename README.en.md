@@ -50,25 +50,27 @@ After going to great lengths to collect ~~$200~~ all seven Dragon Balls...
 
 ---
 
-A Codex instruction system for long-term collaboration. The primary agent continuously owns user understanding, overall design, core implementation, and final judgment, delegating bounded responsibilities when useful.
+A Codex instruction system for long-term collaboration. The primary agent works with the user to understand problems and make decisions, maintains the overall design and actual results, coordinates execution and verification, and owns final delivery.
 
 > Community configuration, not an official OpenAI project. Model, role, and tool support depends on the receiving environment.
 
 ## Working method
 
-Follow an evolving loop: update understanding, fill information gaps, plan the next bounded round, then execute and evaluate its result. The overall route develops with evidence. Plan numbers make cumulative effort visible within a task; simple tasks need no formal numbering.
+Start from the user’s goal and actual situation. Use research, discussion, samples, and usage feedback to refine understanding, then carry confirmed decisions through implementation and verification. Handle ordinary details autonomously and bring concrete evidence and consequences to important choices with the user.
 
 - Product development revisits value, experience, scope, and success criteria as ideas and feedback develop.
 - Code development implements and verifies real usage paths, distinguishing local checks from complete outcomes.
 - Deep research builds the decision-relevant domain framework, then selects candidates and deeper investigations while retaining reusable module-level value.
-- Delegation divides responsibilities and outputs. The primary agent does not repeat delegated research through different sources, and still owns retained design, key code, and integration.
+- Delegation divides responsibilities and outputs. Agents complete assigned research, implementation, verification, and fixes; the primary agent checks decisive source evidence and integrates results.
+- Workflow records retain background, global and current assumptions, choices, evidence, and route changes for both user reading and model continuation.
+- Teaching during tasks addresses observed knowledge gaps with the terms, foundations, and principles needed to express requirements and judge the current project.
 
 ## Current structure
 
 | Layer | Files | Purpose |
 | --- | --- | --- |
-| Global guidance | [global/AGENTS.md](global/AGENTS.md) | Work loop, authority, collaboration, and communication |
-| Roles | [agents/](agents/README.md) | 10 self-contained role definitions |
+| Global guidance | [global/AGENTS.md](global/AGENTS.md) | Shared understanding, execution, authority, collaboration, and communication |
+| Roles | [agents/](agents/README.md) | 13 role definitions and supporting methods |
 | Task methods | [skills/](skills/) | Skills and supporting resources |
 | Installation | [INSTALL.md](INSTALL.md), [examples/](examples/) | Merge installation and project adaptation |
 | Release history | [docs/HISTORY.md](docs/HISTORY.md) | Current changes and previous versions |
@@ -81,7 +83,7 @@ Current hosts discover standalone role TOML files from the agent directory. A pe
 | --- | --- |
 | Development and experience | `product-development`, `code-development`, `code-review`, `frontend-design` |
 | Research and judgment | `deep-research`, `search-source-registry`, `company-research-brief`, `xy-axis-thinking` |
-| Task state and communication | `workflow-state-distiller`, `workflow-route-mapper`, `eli5` |
+| Task state and communication | `workflow-state-distiller`, `workflow-route-mapper`, `teach-and-explain` |
 | Instruction maintenance | `write-instructions-zh` |
 
 Descriptions specify when a Skill applies; its body and references provide the method. External tools, plugins, and credentials are supplied by the receiving environment.
