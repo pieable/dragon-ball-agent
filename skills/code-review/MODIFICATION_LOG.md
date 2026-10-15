@@ -1,5 +1,13 @@
 # Code Review Skill 修改记录
 
+## 2026-10-15 关键事实、结构风险与性能及模型证据
+
+用户授权在候选中吸收 pstack 的五项方法：[blast-radius](https://github.com/cursor/plugins/blob/main/pstack/skills/blast-radius/SKILL.md) 要求超出 diff 与符号搜索追踪安全交付依赖的关键事实；[architect 的 design-red-flags](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/references/design-red-flags.md) 用于识别局部改动可能触及的结构缺陷；[create-verification-skill](https://github.com/cursor/plugins/blob/main/pstack/skills/create-verification-skill/SKILL.md) 提供现有验证入口与功能地图思路；[principle-explain-the-number](https://github.com/cursor/plugins/blob/main/pstack/skills/principle-explain-the-number/SKILL.md) 要求为性能数字找出瓶颈并排除无效测量；[poteto-mode/playbooks/eval](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/eval.md) 提供提示词行为比较的盲化和运行记录方法。
+
+本次在评审主干加入关键事实、权威实现位置及可推翻证据要求，并按需引用 `../code-development/references/project-verification.md` 核对现有验证入口、功能地图、实例与版本、真实操作、副作用、清理和证据留存。补验仅限已有授权允许的隔离环境。完整应用路径仅在结论依赖时运行。范围复杂度专题只在多写者状态、可导入内部模块、手工同步清单或内部阶段泄漏带来具体后果时报告。性能专题核对双方工作负载与配置、错误、缓存、噪声、运行次数与波动、profile 或计数器及端到端结果。模型协议专题核对相同任务输入与环境、候选身份隐藏和实际执行记录，详细提示词验证方法指向 `write-instructions-zh` 的 `behavior-validation.md`；模型投票不能替代证据。风险索引的选择线索同步更新。
+
+主 agent 整合后完成独立只读审查、结构和新增引用检查。审查同时核对 code-development 的项目验证方法及 write-instructions-zh 的行为验证接口。改前文件、精确差异与写入核验记录位于 <维护环境本地路径>/work/pstack-adoption。本轮未运行真实产品或模型行为评测。
+
 ## 2026-10-14 风险专题与案例按需读取
 
 用户要求从最近一个月 GitHub issue 与公开 review 流程中补足遗漏方向，并保留历史经验，避免每次读取全部冗余。入口正文保留共同流程与门槛，原九条风险方向完整迁入八篇专题，新增轻量索引及八个独立案例。先按实际变更影响选择并完整读取有关专题，案例按适用条件、反例或证据缺口展开；同轮仍有效资料沿用，出现新边界或关键未知时扩展，索引外机制继续调查，不设置数量上限。

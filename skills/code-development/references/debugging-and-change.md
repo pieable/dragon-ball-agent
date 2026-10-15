@@ -20,6 +20,16 @@
 
 例如，导入漏行可能源于换行解析、去重或数据库冲突。用只含一条末尾空行的最小文件分别观察解析条数和写入条数，可以区分解析与数据库原因。
 
+多次修正依赖同一个前提却仍在同一结果上失败时，先把共同前提写成一句可检验的主张。下一次修正前，设计能区分该前提与竞争解释的观测。例如怀疑并发任务分配不均时，按任务或进程统计工作量、资源持有量和等待时间的分布，再检查角色分配与释放机制。其他问题按其机制选择观测，依据结果保留或推翻前提，并更新后续修复路线。
+
+## 证明改动依赖的关键事实
+
+对影响不明显但可能跨边界的修改，明确它安全成立所依赖的关键事实。例如，删除清理步骤依赖“对象已无消费者”，更换序列化实现依赖“实际读写方接受相同格式”。优先核实能决定多项风险的事实。
+
+从修改位置追到真实调用方和消费者，再检查文本搜索容易遗漏的关系：锁定库版本及本地补丁、持久化或跨语言表示、协议字段、回调和销毁时序、构建与注册入口。只展开当前事实相关的路径。
+
+构造能使该事实失败的输入或执行顺序，优先用现有测试、实际依赖或最小脚本运行。事实涉及宿主或完整用户路径时，在对应入口验证。记录检查对应的版本、输入、结果及仍未覆盖的条件。源码能够充分证明的局部确定性行为直接核对，不为每次改动另建测试框架。
+
 ## 记录旧行为，再区分它是否正确
 
 接手缺少测试或说明的旧代码时，可先写 characterization test（行为刻画测试），记录当前可观察行为，帮助安全地改变实现。这种测试回答“现在发生什么”，不能单独回答“用户要求什么”。
@@ -45,3 +55,4 @@
 - [Google SRE Book：Effective Troubleshooting](https://sre.google/sre-book/effective-troubleshooting/) — 假设驱动、观察和区分原因的故障排查。
 - [Martin Fowler：Workflows of Refactoring](https://martinfowler.com/articles/workflowsOfRefactoring/fallback.html) — 重构工作流与安全小步。
 - [Artima：Alberto Savoia 讲解 Michael Feathers 的 Working Effectively with Characterization Tests](https://www.artima.com/weblogs/viewpost.jsp?thread=198296) — 行为刻画测试的讲解。
+- [pstack：Blast radius](https://github.com/cursor/plugins/blob/main/pstack/skills/blast-radius/SKILL.md)与[Attack the Premise](https://github.com/cursor/plugins/blob/main/pstack/skills/principle-attack-the-premise/SKILL.md) — 关键安全事实的运行核验及共享前提检验；观测方式按实际故障机制选择。

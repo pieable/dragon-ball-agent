@@ -8,9 +8,9 @@
 | 异步、状态与生命周期 | 并发、回调、缓存、取消、子进程、句柄或连接复用 | [方法](risks/async-state-and-lifecycle.md) |
 | 接口、配置、权限与集成 | 公开能力、默认值、拒绝路径、消费者、构建、注册或发布 | [方法](risks/interfaces-and-integration.md) |
 | 输入与跨层表示 | 输入会被消耗，编码/规范化、数值宽度、对象布局或跨语言接口 | [方法](risks/input-and-representation.md) |
-| 组合预算、输出与计算成本 | 数据或配置扩张、共存资源、最终输出限制、解析和算法成本 | [方法](risks/budgets-and-complexity.md) |
-| 模型可见协议 | agent提示、工具schema、结果、会话恢复或诊断传递 | [方法](risks/model-protocol.md) |
+| 组合预算、输出与计算成本 | 数据或配置扩张、共存资源、最终输出限制、解析和算法成本；性能数字或加速声明 | [方法](risks/budgets-and-complexity.md) |
+| 模型可见协议 | agent提示、工具schema、结果、会话恢复或诊断传递；比较提示词或模型行为 | [方法](risks/model-protocol.md) |
 | 文档、可见语义与维护资料 | 公共行为说明、进度、产品文案、对象含义或接续信息 | [方法](risks/documents-and-product-semantics.md) |
-| 实现范围与复杂度 | 新抽象、配置、兜底或重构增加当前结果之外的维护面 | [方法](risks/scope-and-complexity.md) |
+| 实现范围与复杂度 | 新抽象、配置、兜底或重构增加当前结果之外的维护面；局部修改触及多写者状态、重复清单或暴露内部阶段 | [方法](risks/scope-and-complexity.md) |
 
 这些专题可以交叉选择。按当前风险取得足以判断的材料，沿用同轮仍有效的已读内容，停止展开不再增加条件或证据的重复案例。共同结论和每次兜底审查仍由Skill入口正文承担。
