@@ -1,0 +1,8 @@
+node_modules/
+.tests-tmp/
+.runtime-home/
+.bridge-state/
+.private-backups/
+evidence/
+.env
+*.local.json

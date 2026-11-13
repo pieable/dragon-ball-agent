@@ -1,0 +1,40 @@
+{
+  "name": "luna-dsh-subagent-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dsh": {
+    "bundle": {
+      "patch": "./plugin.patch.yml"
+    }
+  },
+  "exports": {
+    "./plugin": "./plugin.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-llm": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-tools": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-user-approval": "0.2.2-rc.1"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "start": "node mcp.mjs",
+    "test:native": "node test/plugin-integration.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "^3.25.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-llm": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-user-approval": {
+      "optional": true
+    }
+  },
+  "license": "MIT"
+}

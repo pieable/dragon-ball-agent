@@ -1,0 +1,6 @@
+bindings.json
+*.local.json
+live2d-sidecar/*.json
+live2d-sidecar/runtime/
+antigravity-mcp-offline-*/
+*.sqlite*

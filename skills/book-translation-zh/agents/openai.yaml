@@ -1,0 +1,4 @@
+interface:
+  display_name: "中文书籍翻译"
+  short_description: "把完整外文书翻译成自然的现代中文 EPUB"
+  default_prompt: "使用 $book-translation-zh 把这本书翻译成自然、准确并排版完整的简体中文 EPUB。"

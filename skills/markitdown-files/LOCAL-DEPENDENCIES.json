@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "skill": "markitdown-files",
+  "local_dependencies": [],
+  "install_policy": "preserve-existing-unmanaged; never overwrite private dependencies with templates; report missing required dependency before that branch",
+  "public_files": [
+    "skills/markitdown-files/LOCAL-DEPENDENCIES.md",
+    "skills/markitdown-files/SKILL.md",
+    "skills/markitdown-files/agents/openai.yaml"
+  ]
+}

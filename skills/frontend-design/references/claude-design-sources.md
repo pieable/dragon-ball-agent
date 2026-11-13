@@ -1,3 +1,5 @@
+> 本版只保留来源与许可说明，下述四份来源混合专题保留在本地，不包含在公开载荷中。调用入口见 `../LOCAL-DEPENDENCIES.md`。
+
 # 设计指导来源
 
 本地 frontend-design 结合当前 Codex 的项目实现、内容协作与真实入口验证要求适配。[Anthropic frontend-design](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md) 的主体契合、审美规划与自我批评方法继续保留，其原始许可见 [LICENSE.txt](../LICENSE.txt)。

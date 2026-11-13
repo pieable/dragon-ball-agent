@@ -1,0 +1,105 @@
+{
+  "source_component": "luna-subagent-mcp",
+  "source_commit": "1d6b8112b4a64ac45af14a0895b3ba8c3333ac35",
+  "status": "candidate-not-production-authority",
+  "files": [
+    {
+      "path": "host-launcher.mjs",
+      "source_sha256": "f53269b8d7d71e4dc8bbf70ce10e42474c6d0f3a599003e1909e2cd9d8d9d64c",
+      "public_sha256": "cfd67d53c2a2795798da1b5e4a53afec5699715dc18517bc6fa7234bca7dcbed",
+      "source_git_blob_sha256": "5acd460615a5838d932cc1e920c256420ef780c99cc5cfdd6e3e658b58937c3a"
+    },
+    {
+      "path": "mcp.mjs",
+      "source_sha256": "c17696f010556515b0de9591abc3ea6f5290c95eaff7bdba059366fd7d91d903",
+      "public_sha256": "c17696f010556515b0de9591abc3ea6f5290c95eaff7bdba059366fd7d91d903",
+      "source_git_blob_sha256": "4e409cea0d0fd64bce3469b38448b163c537690a989ba3790269980f132c9be5"
+    },
+    {
+      "path": "plugin-state.mjs",
+      "source_sha256": "2b819c5312dc28385e328bce447df16a43e8aac29ec2e9da66f30d59b3bd727e",
+      "public_sha256": "2b819c5312dc28385e328bce447df16a43e8aac29ec2e9da66f30d59b3bd727e",
+      "source_git_blob_sha256": "2b819c5312dc28385e328bce447df16a43e8aac29ec2e9da66f30d59b3bd727e"
+    },
+    {
+      "path": "plugin-transport.mjs",
+      "source_sha256": "2bcca698aa1fdb0b0ad81a0ca90585cc69ca8d867d0f2eae98dc58b0c674a4d2",
+      "public_sha256": "2bcca698aa1fdb0b0ad81a0ca90585cc69ca8d867d0f2eae98dc58b0c674a4d2",
+      "source_git_blob_sha256": "2bcca698aa1fdb0b0ad81a0ca90585cc69ca8d867d0f2eae98dc58b0c674a4d2"
+    },
+    {
+      "path": "plugin.mjs",
+      "source_sha256": "5cf90f15f2c5cb8d85b2d7101d643209dc179a3133c8a1feeff878e082318451",
+      "public_sha256": "5cf90f15f2c5cb8d85b2d7101d643209dc179a3133c8a1feeff878e082318451",
+      "source_git_blob_sha256": "1850b77fb6000e3de2abddc43c11523faf749a2fd9089c8d2aa17da60325aaa2"
+    },
+    {
+      "path": "plugin.patch.yml",
+      "source_sha256": "0430bb58882b5c6ed9241822f3735d9f0ae4f7d44d2b5ef98d1ecd74dee4ce05",
+      "public_sha256": "0430bb58882b5c6ed9241822f3735d9f0ae4f7d44d2b5ef98d1ecd74dee4ce05",
+      "source_git_blob_sha256": "94dccfb8a72c99e1e19d405a84b439eab4898d6a35ae1ae59302e84b1b6d5177"
+    },
+    {
+      "path": "luna.patch.yml",
+      "source_sha256": "69238094f3af825c81e8767a1148410645ca3534a157d2c5b043d7237e599514",
+      "public_sha256": "69238094f3af825c81e8767a1148410645ca3534a157d2c5b043d7237e599514",
+      "source_git_blob_sha256": "8f301853d118a5dc2fe8d56379301a4616b1d5176bb0a419ea4fdc230ff251b8"
+    },
+    {
+      "path": "package.json",
+      "source_sha256": "86562018d9d44202c4fc96c7d4d25e075fe66c1420a1e89f98ea084ebafe5e21",
+      "public_sha256": "bb15a42985dacac6946e0eafa63ccdc1a695c490c0fea318706c2c4ed3a31056",
+      "source_git_blob_sha256": "2805036c0a80238363e296f406286c061a13d7ae92c06e7eb9bf250d17007d0c"
+    },
+    {
+      "path": "package-lock.json",
+      "source_sha256": "98092bd04979491770047d97b6740a77d05320d3d638ae7ed1e77d415357b027",
+      "public_sha256": "b88af018baf20a6540a12927d6de02115a1110b0dc3980e53a125a4a3a56d36a",
+      "source_git_blob_sha256": "3cb6079768fda797da1b87b8320b03deec626d7f77f483c6fcbb319a031f64d1"
+    },
+    {
+      "path": "test/host-launcher.test.mjs",
+      "source_sha256": "d84bd1b61d34a42ebbe66488a7f080a09d9d72bb923f68251b1520fd3a09309f",
+      "public_sha256": "d84bd1b61d34a42ebbe66488a7f080a09d9d72bb923f68251b1520fd3a09309f",
+      "source_git_blob_sha256": "6a66a7241f133a99bef36b7595523c462dc17739911956a18d5cbd91c929be51"
+    },
+    {
+      "path": "test/plugin-state.test.mjs",
+      "source_sha256": "cabb5bbd1cc8e69bf26dab472551e5f08ddd0296bfc440307261d22778613814",
+      "public_sha256": "cabb5bbd1cc8e69bf26dab472551e5f08ddd0296bfc440307261d22778613814",
+      "source_git_blob_sha256": "dc285adc7f1ea53b08f8874c4a497af66129c863f6bcc2b866d17cf15b2e0597"
+    },
+    {
+      "path": "test/plugin-transport.test.mjs",
+      "source_sha256": "ede387ae4140881ab1f7e1bf8295a9dc7f9c0eb5e68c512b950c6d71f9156578",
+      "public_sha256": "ede387ae4140881ab1f7e1bf8295a9dc7f9c0eb5e68c512b950c6d71f9156578",
+      "source_git_blob_sha256": "ede387ae4140881ab1f7e1bf8295a9dc7f9c0eb5e68c512b950c6d71f9156578"
+    },
+    {
+      "path": "test/plugin-integration.mjs",
+      "source_sha256": "1a2f47c812299b08116df881c7f73bc7d392700dc0d564244e24199a27cc2595",
+      "public_sha256": "6d6d33f7f3a88bc4c6686aa4368d3e5cca970a3ad4871574e7586043b767a6f0",
+      "source_git_blob_sha256": "bc40ce2243ed76f824bd10af8bd3eb540de506a1ddf10121181edf959aaecd6b"
+    },
+    {
+      "path": "installation/Start-LunaMcp.py",
+      "source_sha256": "2e29d5d45304b3480e6eeef2413eb2d7d35bab5f9dc7a35fe6548a3154343141",
+      "public_sha256": "2e29d5d45304b3480e6eeef2413eb2d7d35bab5f9dc7a35fe6548a3154343141",
+      "source_git_blob_sha256": "b7349159939575259f506f577e5ed83c43b67a9df34e0f824980a473f17c3f0c"
+    },
+    {
+      "path": "test/live-api-smoke.mjs",
+      "source_sha256": "cf093dcd41b0605c4f15baa5a6ae93e1072df8df8bc61fdd4c37451fe9ccbbec",
+      "public_sha256": "cf093dcd41b0605c4f15baa5a6ae93e1072df8df8bc61fdd4c37451fe9ccbbec",
+      "source_git_blob_sha256": "530f6cd9ac820fe835c7e1eb41d0baedd61902f4dbde72b57c9da65c82037195"
+    }
+  ],
+  "changes": [
+    "Remove machine-specific DSH executable fallback; use explicit LUNA_DSH_EXECUTABLE or normal system locations",
+    "Native mock test resolves runtime through the same explicit binding",
+    "Declare owner-authorized original code under parent repository MIT license",
+    "Do not import installation receipts, configuration backups, state, credentials or legacy superseded entry points",
+    "Use official registry.npmjs.org tarball URLs while preserving locked versions and integrity digests"
+  ],
+  "source_sha256_basis": "Actual working-tree bytes at source_commit; Git may normalize CRLF. Git blob hashes are recorded separately."
+}

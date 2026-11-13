@@ -1,4 +1,4 @@
 interface:
   display_name: "产品开发"
-  short_description: "以客户现实为起点，定义、发明、完善并验证可交付的产品体验"
-  default_prompt: "使用 $product-development，结合当前想法、用户反馈或实现与使用证据，形成或修正产品定义，并明确下一项验证。"
+  short_description: "共同发展灵感、结构与体验，主动发现漏洞和冲突，在能掌握的范围内形成决定"
+  default_prompt: "使用 $product-development，和我一起发展当前想法，主动提出构思与结构、查找漏洞和实现缺口，带着依据推敲体验、取舍与下一步。"

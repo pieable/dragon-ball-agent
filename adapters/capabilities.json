@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-11-13",
+  "purpose": "Planning evidence, not deployment authorization or a runtime feature detector",
+  "default_action": "retain_local",
+  "hosts": {
+    "claude-code": {
+      "observed_version": "2.1.283",
+      "evidence": [
+        "installed package.json",
+        "https://code.claude.com/docs/en/sub-agents",
+        "https://code.claude.com/docs/en/hooks",
+        "https://code.claude.com/docs/en/mcp"
+      ],
+      "paths": {
+        "global_rules": "~/.claude/CLAUDE.md",
+        "skills": "~/.claude/skills",
+        "roles": "~/.claude/agents/*.md",
+        "settings": "~/.claude/settings.json",
+        "user_mcp": "~/.claude.json:mcpServers",
+        "project_mcp": "<workspace>/.mcp.json"
+      },
+      "roles": {
+        "format": "Markdown with YAML frontmatter",
+        "fields_requiring_native_validation": [
+          "name",
+          "description",
+          "tools",
+          "disallowedTools",
+          "model",
+          "permissionMode",
+          "skills",
+          "hooks"
+        ],
+        "generation": "blocked_pending_native_validation",
+        "observed_local_role_files": 0
+      },
+      "tools": {
+        "permission_mapping": "no_cross_host_equivalence",
+        "action": "retain_local"
+      },
+      "mcp": {
+        "action": "plan_only",
+        "merge_unit": "server identifier within explicitly selected scope",
+        "preserve": [
+          "existing server entries",
+          "approvals",
+          "credentials",
+          "local paths"
+        ]
+      },
+      "hooks": {
+        "configuration": "settings hooks or native agent hooks",
+        "action": "retain_local",
+        "reason": "Event names alone do not establish payload, exit-code or permission equivalence"
+      },
+      "lifecycle": {
+        "documented": "Independent subagent context; native resume and compaction",
+        "codex_fork_equivalence": false,
+        "host_execution_verified": false
+      },
+      "models": {
+        "action": "retain_local",
+        "codex_model_names_portable": false
+      }
+    },
+    "deepseek-harness": {
+      "observed_bundle_version": "0.1.0",
+      "observed_peer_version": "0.2.1-rc.2",
+      "evidence": [
+        "one-preset/package.json",
+        "one-preset/plugins/main-agent-prompt.mjs",
+        "one-preset/plugins/subagent-role.mjs",
+        "one-preset/plugins/role-policy.mjs",
+        "one-preset/roles.json"
+      ],
+      "paths": {
+        "global_rules": "<DSH_HOME>/AGENTS.md",
+        "skills": "<DSH_HOME>/skills",
+        "profile": "<DSH_HOME>/profiles/<selected-profile>",
+        "bundle": "<selected-bundle>/cordis.patch.yml",
+        "role_definitions": "<selected-bundle>/roles.json"
+      },
+      "roles": {
+        "format": "Custom one-preset plugin, not a native Codex TOML loader",
+        "fields_observed": [
+          "id",
+          "file",
+          "fs",
+          "shell",
+          "web",
+          "jobs",
+          "todo",
+          "present",
+          "canDelegate",
+          "provider",
+          "model",
+          "reasoningEffort",
+          "reset"
+        ],
+        "tool": "subagent_role",
+        "actions": [
+          "start",
+          "continue",
+          "close"
+        ],
+        "generation": "retain_existing_bundle"
+      },
+      "tools": {
+        "permission_mapping": "preserve per-role filter and delegated policy",
+        "action": "retain_local"
+      },
+      "mcp": {
+        "action": "blocked_pending_schema_evidence",
+        "reason": "One-preset source inspected here does not establish the MCP client configuration and discovery contract"
+      },
+      "hooks": {
+        "observed_mechanism": "Cordis plugin lifecycle and event handlers",
+        "action": "retain_local",
+        "json_hook_equivalence": false
+      },
+      "lifecycle": {
+        "main_prompt": "Injected only for live root without subagent origin",
+        "child": "New session, inherited preset composition, role persona and filter",
+        "context_policies": [
+          "remote",
+          "summary",
+          "reset"
+        ],
+        "reset_continue": "Replace previous task surface with new task after context_full",
+        "host_execution_verified": false
+      },
+      "models": {
+        "fields": [
+          "provider",
+          "model",
+          "reasoningEffort"
+        ],
+        "action": "retain_local",
+        "available_models_verified": false
+      }
+    },
+    "antigravity": {
+      "observed_version_from_inventory": "2.31.2",
+      "evidence": [
+        "builtin/skills/agy-customizations/SKILL.md",
+        "builtin/skills/agy-customizations/docs/hooks.md",
+        "builtin/skills/agy-customizations/docs/mcp_servers.md",
+        "builtin/skills/agy-customizations/docs/plugins.md",
+        "builtin/skills/migrate-agent-settings/SKILL.md"
+      ],
+      "paths": {
+        "global_root": "~/.gemini/config",
+        "plugin": "~/.gemini/config/plugins/<name>",
+        "roles": "<plugin>/agents/*.md",
+        "mcp": "<customization-root>/mcp_config.json",
+        "hooks": "<customization-root>/hooks.json"
+      },
+      "roles": {
+        "documented_fields": [
+          "name",
+          "description",
+          "subagent",
+          "mainAgent",
+          "tools"
+        ],
+        "omitted_tools": "Small read-only default set",
+        "generation": "blocked_pending_tool_and_model_validation"
+      },
+      "tools": {
+        "documented_names": [
+          "read_file",
+          "edit_file",
+          "write_file",
+          "run_command",
+          "manage_task",
+          "search_web"
+        ],
+        "permission_mapping": "no_cross_host_equivalence",
+        "action": "retain_local"
+      },
+      "mcp": {
+        "root_key": "mcpServers",
+        "stdio_fields": [
+          "command",
+          "args",
+          "env"
+        ],
+        "http_fields": [
+          "url"
+        ],
+        "legacy_url_alias": "serverUrl",
+        "transports": [
+          "stdio",
+          "streamable-http"
+        ],
+        "legacy_sse_supported": false,
+        "action": "plan_only"
+      },
+      "hooks": {
+        "format": "Named hooks map, event handlers below each name",
+        "events": [
+          "SessionStart",
+          "PreToolUse",
+          "PostToolUse",
+          "PreInvocation",
+          "PostInvocation",
+          "Stop"
+        ],
+        "handler_type": "command",
+        "timeout_unit": "seconds",
+        "payload_casing": "camelCase",
+        "cwd": "Directory containing hooks.json",
+        "shell_windows": "cmd /c",
+        "execution": "synchronous",
+        "action": "retain_local"
+      },
+      "lifecycle": {
+        "skills": "Name/description first; body on activation",
+        "rules": "always_on or conditional triggers",
+        "precedence": [
+          "workspace",
+          "workspace declared",
+          "global discovered",
+          "builtin",
+          "global declared"
+        ],
+        "subagent_context_equivalence": "unverified",
+        "host_execution_verified": false,
+        "offline_plugin_validation": {
+          "server_start": "requires -standalone",
+          "plugin_discovery": "blocked by isolated profile OAuth initialization",
+          "credentials_reused": false,
+          "probe_stopped": true
+        }
+      },
+      "models": {
+        "action": "retain_local",
+        "migration_guide": "Drops imported model field; no evidence for copying Codex model names"
+      }
+    }
+  }
+}

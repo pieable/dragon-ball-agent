@@ -9,7 +9,7 @@
 3. 列出当前任务涉及的状态和转换。每项转换注明触发事件、前置条件、写入或外部副作用、成功后的状态和失败后的状态。终态是否允许重新进入由业务合同决定。
 4. 写出必须一直成立的不变量。例如一个已取消任务不能发布结果，一个未完成导入不能成为当前版本。这些约束用于审查全部相关转换及其测试。
 
-复杂流程可用转换表或状态图。只有一个简单状态变化时，直接在代码和测试中表达即可。
+复杂流程可用转换表或状态图。操作交错、重试或恢复的组合难以靠例子覆盖，或需要让业务负责人看清错误路径时，按[状态模型与可视化验证](statechart-verification.md)考虑 TLA+ / TLC 与 pstack `/statechart`，并将反例回到真实实现核验。只有一个简单状态变化时，直接在代码和测试中表达即可。
 
 ## 检查部分完成
 
@@ -39,6 +39,35 @@
 检查“读取状态—决定—写入”的间隙是否可能被其他写入者改变。按实际竞争范围选择已有锁、事务或版本条件写入，并明确冲突时的行为。单进程锁无法自动保证多进程写入安全。
 
 验收覆盖当前合同中的代表性时序。多种操作会相互影响时，结合 `testing-methods.md` 使用操作序列与不变量检查。
+
+## 从具体失败窗口选择实现与验证
+
+| 涉及的机制 | 读取与追踪 | 可重现的检查及其实现含义 |
+|---|---|---|
+| 提交后响应丢失 | 标出请求发出、远端提交、本地接收和完成标记，查 timeout 分支及状态查询 | 让依赖提交后暂停响应，再使客户端超时。确认同一操作 ID 能查询/重放并得到一个业务效果。结果未知时沿现有合同恢复，不能仅因本地超时就认定远端未执行 [S1] |
+| 重试改变操作身份 | 从创建意图追到入队、每次尝试、持久化、迁移和重启领取，查循环内 `uuid()` 或重新计算身份 | 比较每次实际发送的 key 与原始记录。同一意图跨这些阶段保持稳定，独立的新意图不能仅因参数相同就被合并 [S1] |
+| 同 key 参数冲突与首请求并发 | 查 key 的租户/账户范围、首次参数记录、唯一约束、进行中状态及副作用位置 | 用 barrier 让两个请求同时通过“不存在”判断，确认只有一个进入逻辑副作用。同 key 改参数时按接口合同拒绝或报告冲突，首次结果不被覆盖 [S1] |
+| 去重窗口短于迟到/恢复窗口 | 查键/事件记录保留时间、客户端重试、消息保留、离线和人工重放路径 | 在过期前后与进程重启后重放相同 key，核对实际平台保证。保留窗口由业务及平台约束确定，不套用其他服务的示例 TTL |
+| 重复事件与乱序更新 | 分别读取 event ID、聚合对象 ID、版本/顺序号和事件格式，查去重标记与业务提交关系 | 对同一事件重复投递，并按新→旧顺序发送不同事件。去重保护同一事件，版本条件保护新状态；同对象同类型的合法后续事件应继续处理 [S2] |
+| 消费确认与生产发布窗口 | 消费侧追持久接收/处理/ack，生产侧追业务提交/待发布记录/发送/完成标记，核对实际事务边界 | 在这些边界前后中断并从残留状态恢复，观察丢事件和重复发布。复用项目现有 inbox/outbox、事务或幂等能力，数据库事务不自动覆盖外部调用 [S3] |
+| 读后写与冲突处理 | 查两个连接/进程读到的版本、条件写入、影响行数和隔离级别 | 两个写者同时读同版本再提交，确认冲突不会被静默成功覆盖。冲突重试重新读取；需从事务开头重试时不能复用旧快照 [S4] |
+| 监听历史过期 | 查 watch/游标的版本、断线与过期错误处理，以及当前视图如何重建 | Kubernetes 旧 resourceVersion 返回 410 时核对重新 list/watch。重连成功与补齐缺失状态分别验证，其他平台按其合同处理 [S5] |
+| 多层重试与截止时间重置 | 列出 SDK、代理、网格与业务层尝试次数、退避、Retry-After 和剩余 deadline | 记录一条上游操作触发的总下游次数及时间分布，检查乘积放大、同步尖峰和上游已结束的后台工作。重试预算、抖动及期限按故障语义和已确认约束实现 [S6] |
+| 取消信号与实际退出 | 追父子任务、阻塞 I/O、线程/进程、发布与 finally 清理，查取消后是否等待任务返回 | 在写入前后、输入替换和所有者销毁时取消，观察旧任务能否继续发布、资源何时归还。gRPC/Go 的取消仍需业务工作配合并收束已启动任务 [S7] |
+| 租约过期后的旧写者 | 查租约/heartbeat、长暂停、接管及资源实际接受写入的条件 | 暂停旧持有者至租约失效，让新持有者写入，再恢复旧者。按平台能力用资源侧 fencing token 或版本条件拒绝陈旧写，不能仅检查“曾取得锁” [S8] |
+
+检查使用隔离资源及可控暂停/中断点，断言最终可见状态和副作用次数。普通错误返回、取消信号、进程终止和掉电分别覆盖不同保证，按当前合同选择。平台已承担的协调、重试和恢复能力先核实再复用。
+
+### 这些检查的一手依据
+
+- [S1 AWS 幂等 API](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/)：意图、参数冲突、迟到请求与原子记录。
+- [S2 Stripe webhooks](https://docs.stripe.com/webhooks)：重复、乱序和事件身份。
+- [S3 Transactional Outbox](https://microservices.io/patterns/data/transactional-outbox.html)、[Kafka 交付语义](https://kafka.apache.org/documentation/#semantics)：事务与外部目的地边界。
+- [S4 PostgreSQL 隔离](https://www.postgresql.org/docs/18/transaction-iso.html)、[RFC 9110 If-Match](https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.1)：快照、冲突和条件更新。
+- [S5 Kubernetes API concepts](https://kubernetes.io/docs/reference/using-api/api-concepts/)：resourceVersion 与历史过期。
+- [S6 AWS 超时、重试和抖动](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)：重试放大与负载。
+- [S7 gRPC deadlines](https://grpc.io/docs/guides/deadlines/)、[Go context](https://pkg.go.dev/context)、[errgroup](https://pkg.go.dev/golang.org/x/sync/errgroup)：传播、协作取消和等待。
+- [S8 Hazelcast FencedLock 的 fencing tokens](https://docs.hazelcast.com/hazelcast/5.5/data-structures/fencedlock#fencing-tokens)：旧持有者暂停后的资源侧保护。
 
 ## 例子：后台生成报告
 

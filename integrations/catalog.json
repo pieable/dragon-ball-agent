@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "components": [
+    {
+      "id": "fastctx",
+      "ownership": "external",
+      "source_status": "retain-installed",
+      "purpose": "Local file inspection and mechanical edits",
+      "copy_runtime": false
+    },
+    {
+      "id": "playwright-chrome",
+      "ownership": "external",
+      "source_status": "retain-installed",
+      "purpose": "Browser connection with existing login state",
+      "copy_runtime": false
+    },
+    {
+      "id": "chrome-devtools",
+      "ownership": "external",
+      "source_status": "retain-installed",
+      "purpose": "Browser developer tools",
+      "copy_runtime": false
+    },
+    {
+      "id": "chrome-devtools-proxy",
+      "ownership": "local-integration",
+      "source_status": "license-and-source-review-pending",
+      "purpose": "Native browser bridge",
+      "copy_runtime": false
+    },
+    {
+      "id": "node_repl",
+      "ownership": "host-runtime",
+      "source_status": "retain-host-managed",
+      "purpose": "Host-injected browser and computer runtime",
+      "copy_runtime": false
+    },
+    {
+      "id": "antigravity-gemini",
+      "ownership": "local-integration",
+      "source_status": "reviewed-source-candidate-not-deployed",
+      "purpose": "Antigravity conversation transport",
+      "copy_runtime": false,
+      "source": "integrations/antigravity-gemini",
+      "provenance": "integrations/antigravity-gemini/SOURCE.json",
+      "native_app_verified": false
+    },
+    {
+      "id": "luna-subagent",
+      "ownership": "local-integration",
+      "source_status": "reviewed-source-candidate-not-deployed",
+      "purpose": "OpenAI API execution layer in DeepSeek Harness",
+      "copy_runtime": false,
+      "source": "integrations/luna-dsh",
+      "provenance": "integrations/luna-dsh/SOURCE.json",
+      "native_mock_verified": true,
+      "role_adaptation": "adapters/deepseek-harness/luna-role-plan.json"
+    }
+  ],
+  "policy": "Maintain reviewed integration source once. Keep executable locations, account bindings and credentials local. Inspecting configuration does not start tools or authorize their use."
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "description": "Metadata only, not a Skill or an installable payload. Missing conditional dependencies must block that branch, not unrelated tasks.",
+  "dependencies": [
+    {
+      "skill": "book-translation-zh",
+      "runtime_relative_path": "skills/book-translation-zh/references/translation-examples.md",
+      "required": false,
+      "required_when": "哲学或论证密集翻译、样片出现翻译腔，需要读取真实短译例时",
+      "public_entry": "skills/book-translation-zh/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "redistribution-not-cleared"
+    },
+    {
+      "skill": "frontend-design",
+      "runtime_relative_path": "skills/frontend-design/references/aesthetic-direction.md",
+      "required": false,
+      "required_when": "调用相应视觉专题进行设计或审查时",
+      "public_entry": "skills/frontend-design/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "redistribution-not-cleared"
+    },
+    {
+      "skill": "frontend-design",
+      "runtime_relative_path": "skills/frontend-design/references/visual-quality.md",
+      "required": false,
+      "required_when": "调用相应视觉专题进行设计或审查时",
+      "public_entry": "skills/frontend-design/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "redistribution-not-cleared"
+    },
+    {
+      "skill": "frontend-design",
+      "runtime_relative_path": "skills/frontend-design/references/design-system.md",
+      "required": false,
+      "required_when": "调用相应视觉专题进行设计或审查时",
+      "public_entry": "skills/frontend-design/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "redistribution-not-cleared"
+    },
+    {
+      "skill": "frontend-design",
+      "runtime_relative_path": "skills/frontend-design/references/visual-critique.md",
+      "required": false,
+      "required_when": "调用相应视觉专题进行设计或审查时",
+      "public_entry": "skills/frontend-design/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "redistribution-not-cleared"
+    },
+    {
+      "skill": "teach-and-explain",
+      "runtime_relative_path": "skills/teach-and-explain/user/学习档案.md",
+      "required": false,
+      "required_when": "个性化学习/持续档案维护，或明确选用本地教学来源时",
+      "public_entry": "skills/teach-and-explain/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "private-profile-or-history"
+    },
+    {
+      "skill": "teach-and-explain",
+      "runtime_relative_path": "skills/teach-and-explain/sources/",
+      "required": false,
+      "required_when": "个性化学习/持续档案维护，或明确选用本地教学来源时",
+      "public_entry": "skills/teach-and-explain/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "redistribution-not-cleared"
+    },
+    {
+      "skill": "write-instructions-zh",
+      "runtime_relative_path": "skills/write-instructions-zh/MODIFICATION_LOG.md",
+      "required": false,
+      "required_when": "维护或重写本Skill，需要追溯原有共同要求时",
+      "public_entry": "skills/write-instructions-zh/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "private-profile-or-history"
+    },
+    {
+      "skill": "write-instructions-zh",
+      "runtime_relative_path": "skills/write-instructions-zh/RULE_RATIONALE.md",
+      "required": false,
+      "required_when": "维护或重写本Skill，需要追溯原有共同要求时",
+      "public_entry": "skills/write-instructions-zh/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "private-profile-or-history"
+    },
+    {
+      "skill": "writing-zh",
+      "runtime_relative_path": "skills/writing-zh/samples/",
+      "required": false,
+      "required_when": "仿写或选用本地范文时",
+      "public_entry": "skills/writing-zh/LOCAL-DEPENDENCIES.md",
+      "policy": "preserve_local_never_overwrite",
+      "local_original_present": true,
+      "reason": "redistribution-not-cleared"
+    }
+  ]
+}

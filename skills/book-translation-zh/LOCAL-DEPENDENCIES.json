@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "skill": "book-translation-zh",
+  "local_dependencies": [
+    "references/translation-examples.md"
+  ],
+  "install_policy": "preserve-existing-unmanaged; never overwrite private dependencies with templates; report missing required dependency before that branch",
+  "public_files": [
+    "skills/book-translation-zh/LOCAL-DEPENDENCIES.md",
+    "skills/book-translation-zh/SKILL.md",
+    "skills/book-translation-zh/agents/openai.yaml",
+    "skills/book-translation-zh/references/epub-workflow.md",
+    "skills/book-translation-zh/references/modern-chinese-style.md",
+    "skills/book-translation-zh/scripts/validate_epub.ps1"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "skill": "teach-and-explain",
+  "local_dependencies": [
+    "user/学习档案.md",
+    "sources/"
+  ],
+  "install_policy": "preserve-existing-unmanaged; never overwrite private dependencies with templates; report missing required dependency before that branch",
+  "public_files": [
+    "skills/teach-and-explain/LOCAL-DEPENDENCIES.md",
+    "skills/teach-and-explain/SKILL.md",
+    "skills/teach-and-explain/assets/glossary.html",
+    "skills/teach-and-explain/assets/learning-profile.template.md",
+    "skills/teach-and-explain/references/glossary-data.md",
+    "skills/teach-and-explain/references/knowledge-organization.md",
+    "skills/teach-and-explain/references/learning-design.md",
+    "skills/teach-and-explain/references/project-glossary.md",
+    "skills/teach-and-explain/references/writing-sample.md",
+    "skills/teach-and-explain/scripts/update_glossary.py",
+    "skills/teach-and-explain/sources/index.md"
+  ]
+}

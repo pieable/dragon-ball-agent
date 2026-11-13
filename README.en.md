@@ -1,105 +1,15 @@
-<p align="right">
-  <a href="README.md">中文</a> | <strong>English</strong>
-</p>
+# Dragon Ball Agent
 
-<div align="center">
-  <img src="assets/four-star-dragon-ball.png" alt="Four-Star Dragon Ball" width="180">
+A shared source of working principles and skills for Codex, Claude Code, DeepSeek Harness and Antigravity, with native adapters and local private layers.
 
-  <h1>
-    Dragon Ball Agent
-    <br>
-    <sub>Come forth, Shenron! Grant my wish!</sub>
-  </h1>
-</div>
+The current branch builds isolated candidates from 19 skills and 194 reviewed source files. Codex includes 11 native roles. Other hosts retain unresolved native role, permission and lifecycle differences. Full candidates are not deployment-ready; actual host loading and integration validation remain pending.
 
-After going to great lengths to collect ~~$200~~ all seven Dragon Balls...
+- [Chinese guide](README.md)
+- [Build, preview and recovery](INSTALL.md)
+- [Host capabilities](docs/HOST-CAPABILITIES.md)
+- [Local materials and licensing](docs/SKILL-LAYERS.md)
+- [Integration catalog](integrations/README.md)
 
-**User:** Come forth, Shenron! Grant my wish!
+The synchronizer performs three-way comparison, preserves local changes, backs up managed changes and supports explicit rollback. It does not copy credentials, private histories, unsupported assets or host-managed runtimes. Dependencies are reported explicitly rather than silently removed.
 
-**Shenron:** State your wish.
-
-**User:** I want a GPT that can truly work with me over the long term! It should always remember what I am actually trying to accomplish. It should handle simple things on its own and bring in subagents for complex work. And no matter what happens, it must never interrupt me with questions—just decide everything by itself!
-
-**Shenron:** That wish cannot be granted.
-
-**User:** Why not?
-
-**Shenron:** Your requirements contradict each other.
-
-**User:** ...Fair enough. Let me revise it. Normally, it should use its own judgment. But when the goal is unclear, an important decision is at stake, or the cost could be significant, it should ask me. The rest of the time, it should not come running to me over every trivial detail.
-
-**Shenron:** That can be granted.
-
-**User:** One more thing! Subagents should not be summoned at random, either. It should handle simple work itself. When the method and the definition of done are already clear, it can delegate the task directly. But if a stage still calls for ongoing investigation, judgment, and changes of direction, put one lead in charge of the entire stage.
-
-**Shenron:** Your wish is clear.
-
-**User:** Then begin!
-
-**Shenron:** Your wish is being granted.
-
-...
-
-**User:** Wait!
-
-**Shenron:** Go on.
-
-**User:** I changed my mind about that earlier part. If there is already a complete result, do not redo the same work just for the sake of “independent verification.” Only investigate further when there is an actual contradiction or gap.
-
-**Shenron:** That can be granted.
-
----
-
-A Codex instruction system for long-term collaboration. The primary agent works with the user to understand problems and make decisions, maintains the overall design and actual results, coordinates execution and verification, and owns final delivery.
-
-> Community configuration, not an official OpenAI project. Model, role, and tool support depends on the receiving environment.
-
-## Working method
-
-Start from the user’s goal and actual situation. Use research, discussion, samples, and usage feedback to refine understanding, then carry confirmed decisions through implementation and verification. Handle ordinary details autonomously and bring concrete evidence and consequences to important choices with the user.
-
-- Product development revisits value, experience, scope, and success criteria as ideas and feedback develop.
-- Code development implements and verifies real usage paths, distinguishing local checks from complete outcomes.
-- Deep research builds the decision-relevant domain framework, then selects candidates and deeper investigations while retaining reusable module-level value.
-- Delegation divides responsibilities and outputs. Agents complete assigned research, implementation, verification, and fixes; the primary agent checks decisive source evidence and integrates results.
-- Workflow records retain background, global and current assumptions, choices, evidence, and route changes for both user reading and model continuation.
-- Teaching during tasks addresses observed knowledge gaps with the terms, foundations, and principles needed to express requirements and judge the current project.
-
-## Current structure
-
-| Layer | Files | Purpose |
-| --- | --- | --- |
-| Global guidance | [global/AGENTS.md](global/AGENTS.md) | Shared understanding, execution, authority, collaboration, and communication |
-| Roles | [agents/](agents/README.md) | 13 role definitions and supporting methods |
-| Task methods | [skills/](skills/) | Skills and supporting resources |
-| Installation | [INSTALL.md](INSTALL.md), [examples/](examples/) | Merge installation and project adaptation |
-| Release history | [docs/HISTORY.md](docs/HISTORY.md) | Current changes and previous versions |
-
-Current hosts discover standalone role TOML files from the agent directory. A per-role entry in `config.toml` is not required. Keep the user's main model and check availability of models specified in role files.
-
-## 11 Skills
-
-| Area | Skills |
-| --- | --- |
-| Development and experience | `product-development`, `code-development`, `code-review`, `frontend-design` |
-| Research and judgment | `deep-research`, `search-source-registry`, `xy-axis-thinking` |
-| Task state and communication | `workflow-state-distiller`, `workflow-route-mapper`, `teach-and-explain` |
-| Instruction maintenance | `write-instructions-zh` |
-
-Descriptions specify when a Skill applies; its body and references provide the method. External tools, plugins, and credentials are supplied by the receiving environment.
-
-## Installation
-
-Follow the [installation guide](INSTALL.md) to merge selected content while preserving existing configuration. Verify installed files, host discovery, and real task behavior separately. Clearly report anything not tested.
-
-Historical shared Base files, Root configuration mirrors, and the forced-fork Hook are no longer active installation inputs. They remain accessible through [release history](docs/HISTORY.md). Personal configuration, sessions, memories, and secrets are excluded.
-
-## License
-
-Original repository content uses [MIT](LICENSE). Third-party files retain their own licenses and attribution; see [third-party notes](docs/THIRD_PARTY.md).
-
----
-
-**User:** Great. By the way, I have one more wish.
-
-**GPT:** You've reached your usage limit.
+Original work is MIT-licensed; included third-party materials retain their own terms.

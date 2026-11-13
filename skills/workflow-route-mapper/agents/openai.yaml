@@ -1,3 +1,5 @@
 interface:
   display_name: "探索路线图"
-  short_description: "记录 AI 的工作过程，展示当前结果、关键选择与依据，并按阶段回查"
+  short_description: "建立项目共同入口，连接稳定节点、路线关系、材料和当前状态"
+  default_prompt: "使用 $workflow-route-mapper 建立或接续项目路线记录，沿用已有资料和编号，把已核对的目标、决定、证据、尝试、结果与未完成事项通过明确关系连接起来，并保持人读视图和 AI 记录同源。"
+

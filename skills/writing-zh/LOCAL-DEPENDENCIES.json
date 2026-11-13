@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "skill": "writing-zh",
+  "local_dependencies": [
+    "samples/"
+  ],
+  "install_policy": "preserve-existing-unmanaged; never overwrite private dependencies with templates; report missing required dependency before that branch",
+  "public_files": [
+    "skills/writing-zh/LOCAL-DEPENDENCIES.md",
+    "skills/writing-zh/SKILL.md",
+    "skills/writing-zh/references/comprehension-and-editing.md",
+    "skills/writing-zh/references/expression-and-review.md",
+    "skills/writing-zh/references/interface-copy.md",
+    "skills/writing-zh/samples/index.md"
+  ]
+}

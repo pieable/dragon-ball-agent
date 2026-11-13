@@ -1,0 +1,70 @@
+{
+  "codex": {
+    "display_name": "Codex",
+    "global_target": "AGENTS.md",
+    "skills_target": "skills",
+    "native_roles": true,
+    "unresolved": [
+      "Complete remaining skill and integration migration",
+      "Verify final host loading before production deployment"
+    ]
+  },
+  "claude-code": {
+    "display_name": "Claude Code",
+    "global_target": "CLAUDE.md",
+    "skills_target": "skills",
+    "native_roles": false,
+    "observed_version": "2.1.283",
+    "unresolved": [
+      "Map role model, tools, permissions and context semantics",
+      "Reconcile existing locally divergent skills",
+      "Verify skills and global guidance in the native host",
+      "Map hooks and MCP settings without changing user permissions"
+    ],
+    "retain_local_targets": {
+      "skills/company-research-brief/SKILL.md": "Preserve existing private report author and delivery workflow",
+      "skills/company-research-brief/references/source-policy.md": "Preserve private report evidence and formatting policy"
+    }
+  },
+  "deepseek-harness": {
+    "display_name": "DeepSeek Harness",
+    "global_target": "AGENTS.md",
+    "skills_target": "skills",
+    "native_roles": false,
+    "observed_adapter_version": "0.2.1-rc.2",
+    "unresolved": [
+      "Reconcile current one-preset root-only instructions and nine role policies",
+      "Preserve independent contexts, reset and compaction behavior",
+      "Integrate through profile bundle without altering Norns or other presets",
+      "Reconcile thirteen divergent skills"
+    ],
+    "retain_local_targets": {
+      "AGENTS.md": "Preserve current host scope and personal working rules until semantic reconciliation",
+      "skills/code-development/SKILL.md": "Keep existing compact development contract",
+      "skills/code-review/SKILL.md": "Keep existing compact conditional review contract",
+      "skills/code-development/references/project-docs.md": "Unresolved retention policy",
+      "skills/product-development/SKILL.md": "Preserve existing personal product boundaries",
+      "skills/product-development/agents/openai.yaml": "Keep metadata aligned with retained instructions",
+      "skills/workflow-route-mapper/SKILL.md": "Unresolved task versus route numbering",
+      "skills/workflow-route-mapper/agents/openai.yaml": "Keep metadata aligned with retained instructions",
+      "skills/workflow-route-mapper/references/route-graph.md": "Unresolved task versus route numbering",
+      "skills/workflow-state-distiller/SKILL.md": "Preserve existing behavior until evaluation",
+      "skills/workflow-state-distiller/agents/openai.yaml": "Keep metadata aligned with retained instructions",
+      "skills/workflow-state-distiller/references/eval-cases.md": "Keep evaluation aligned with retained numbering and behavior"
+    }
+  },
+  "antigravity": {
+    "display_name": "Antigravity",
+    "global_target": "plugins/dragon-ball-agent/rules/AGENTS.md",
+    "skills_target": "plugins/dragon-ball-agent/skills",
+    "native_roles": false,
+    "observed_version": "2.31.2",
+    "rule_max_bytes": 24000,
+    "unresolved": [
+      "Validate role tools explicitly: omitted tools default to read-only",
+      "Verify supported role model selection rather than copying Codex model names",
+      "Map command hook protocol and MCP variable semantics",
+      "Validate plugin loading and combined always-on token budget"
+    ]
+  }
+}

@@ -1,0 +1,439 @@
+{
+  "skills/playwright/SKILL.md": {
+    "base_sha256": "c52cc95125b720cdc3c9829b0294c2752d4ae9b85a5282aa153da8bba929af87",
+    "result_sha256": "d0dc964843a8ec04570209ac66a2dd09b020d89004d3ae69894df1cb91573324",
+    "render_harness_home": true,
+    "changes": [
+      {
+        "start": 2,
+        "end": 3,
+        "replacement": [
+          "description: \"Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screenshots, data extraction, UI-flow debugging) via `npx @playwright/cli` in PowerShell.\"\r\n"
+        ]
+      },
+      {
+        "start": 8,
+        "end": 9,
+        "replacement": [
+          "Drive a real browser through the DSH `pwsh` tool using `npx @playwright/cli`. This runs the CLI without requiring a global installation or a bash wrapper.\r\n"
+        ]
+      },
+      {
+        "start": 13,
+        "end": 14,
+        "replacement": [
+          "Before proposing commands, check whether `npx` is available:\r\n"
+        ]
+      },
+      {
+        "start": 15,
+        "end": 17,
+        "replacement": [
+          "```powershell\r\n",
+          "Get-Command npx -ErrorAction SilentlyContinue\r\n"
+        ]
+      },
+      {
+        "start": 21,
+        "end": 22,
+        "replacement": [
+          "```powershell\r\n"
+        ]
+      },
+      {
+        "start": 31,
+        "end": 32,
+        "replacement": [
+          "Once `npx` is present, run the CLI directly. A global install of `playwright-cli` is optional.\r\n"
+        ]
+      },
+      {
+        "start": 33,
+        "end": 34,
+        "replacement": [
+          "## DSH execution environment\r\n"
+        ]
+      },
+      {
+        "start": 35,
+        "end": 41,
+        "replacement": [
+          "Use PowerShell commands through `pwsh`. The installed Skill is at `{{HARNESS_HOME}}/skills/playwright`; commands below call the npm package directly and do not use the retained `.sh` resource. Before using a browser that needs an existing login session, check whether the available CLI can connect to that session. The DSH tool list does not provide a `playwright-chrome` connector.\r\n"
+        ]
+      },
+      {
+        "start": 44,
+        "end": 45,
+        "replacement": [
+          "Run the package directly:\r\n"
+        ]
+      },
+      {
+        "start": 46,
+        "end": 53,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli open https://playwright.dev --headed\r\n",
+          "npx @playwright/cli snapshot\r\n",
+          "npx @playwright/cli click e15\r\n",
+          "npx @playwright/cli type \"Playwright\"\r\n",
+          "npx @playwright/cli press Enter\r\n",
+          "npx @playwright/cli screenshot\r\n"
+        ]
+      },
+      {
+        "start": 57,
+        "end": 58,
+        "replacement": [
+          "```powershell\r\n"
+        ]
+      },
+      {
+        "start": 72,
+        "end": 77,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli open https://example.com\r\n",
+          "npx @playwright/cli snapshot\r\n",
+          "npx @playwright/cli click e3\r\n",
+          "npx @playwright/cli snapshot\r\n"
+        ]
+      },
+      {
+        "start": 94,
+        "end": 101,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli open https://example.com/form\r\n",
+          "npx @playwright/cli snapshot\r\n",
+          "npx @playwright/cli fill e1 \"user@example.com\"\r\n",
+          "npx @playwright/cli fill e2 \"password123\"\r\n",
+          "npx @playwright/cli click e3\r\n",
+          "npx @playwright/cli snapshot\r\n"
+        ]
+      },
+      {
+        "start": 105,
+        "end": 108,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli open https://example.com --headed\r\n",
+          "npx @playwright/cli tracing-start\r\n"
+        ]
+      },
+      {
+        "start": 109,
+        "end": 110,
+        "replacement": [
+          "npx @playwright/cli tracing-stop\r\n"
+        ]
+      },
+      {
+        "start": 114,
+        "end": 119,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli tab-new https://example.com\r\n",
+          "npx @playwright/cli tab-list\r\n",
+          "npx @playwright/cli tab-select 0\r\n",
+          "npx @playwright/cli snapshot\r\n"
+        ]
+      },
+      {
+        "start": 121,
+        "end": 122,
+        "replacement": [
+          "## Direct CLI invocation\r\n"
+        ]
+      },
+      {
+        "start": 123,
+        "end": 124,
+        "replacement": [
+          "`npx @playwright/cli` runs the CLI without a global install:\r\n"
+        ]
+      },
+      {
+        "start": 125,
+        "end": 127,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli --help\r\n"
+        ]
+      },
+      {
+        "start": 129,
+        "end": 130,
+        "replacement": [
+          "Use this direct command unless the repository already standardizes on a global installation.\r\n"
+        ]
+      }
+    ]
+  },
+  "skills/playwright/references/cli.md": {
+    "base_sha256": "da94ffe5a7c368e233eac1cdfa2d5207cb85a2a0571607af0e43402c6e12cd45",
+    "result_sha256": "44ad47c71d4619a68a30217552040d1b7c8eb2f735795a16a0fc8aada2271602",
+    "render_harness_home": true,
+    "changes": [
+      {
+        "start": 2,
+        "end": 3,
+        "replacement": [
+          "Use PowerShell through the DSH `pwsh` tool and run the package directly:\r\n"
+        ]
+      },
+      {
+        "start": 4,
+        "end": 8,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli --help\r\n"
+        ]
+      },
+      {
+        "start": 10,
+        "end": 17,
+        "replacement": [
+          "The installed Skill is at `{{HARNESS_HOME}}/skills/playwright`; no bash wrapper or shell alias is required.\r\n"
+        ]
+      },
+      {
+        "start": 20,
+        "end": 41,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli open https://example.com\r\n",
+          "npx @playwright/cli close\r\n",
+          "npx @playwright/cli snapshot\r\n",
+          "npx @playwright/cli click e3\r\n",
+          "npx @playwright/cli dblclick e7\r\n",
+          "npx @playwright/cli type \"search terms\"\r\n",
+          "npx @playwright/cli press Enter\r\n",
+          "npx @playwright/cli fill e5 \"user@example.com\"\r\n",
+          "npx @playwright/cli drag e2 e8\r\n",
+          "npx @playwright/cli hover e4\r\n",
+          "npx @playwright/cli select e9 \"option-value\"\r\n",
+          "npx @playwright/cli upload ./document.pdf\r\n",
+          "npx @playwright/cli check e12\r\n",
+          "npx @playwright/cli uncheck e12\r\n",
+          "npx @playwright/cli eval \"document.title\"\r\n",
+          "npx @playwright/cli eval \"el => el.textContent\" e5\r\n",
+          "npx @playwright/cli dialog-accept\r\n",
+          "npx @playwright/cli dialog-accept \"confirmation text\"\r\n",
+          "npx @playwright/cli dialog-dismiss\r\n",
+          "npx @playwright/cli resize 1920 1080\r\n"
+        ]
+      },
+      {
+        "start": 45,
+        "end": 49,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli go-back\r\n",
+          "npx @playwright/cli go-forward\r\n",
+          "npx @playwright/cli reload\r\n"
+        ]
+      },
+      {
+        "start": 53,
+        "end": 58,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli press Enter\r\n",
+          "npx @playwright/cli press ArrowDown\r\n",
+          "npx @playwright/cli keydown Shift\r\n",
+          "npx @playwright/cli keyup Shift\r\n"
+        ]
+      },
+      {
+        "start": 62,
+        "end": 69,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli mousemove 150 300\r\n",
+          "npx @playwright/cli mousedown\r\n",
+          "npx @playwright/cli mousedown right\r\n",
+          "npx @playwright/cli mouseup\r\n",
+          "npx @playwright/cli mouseup right\r\n",
+          "npx @playwright/cli mousewheel 0 100\r\n"
+        ]
+      },
+      {
+        "start": 73,
+        "end": 77,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli screenshot\r\n",
+          "npx @playwright/cli screenshot e5\r\n",
+          "npx @playwright/cli pdf\r\n"
+        ]
+      },
+      {
+        "start": 81,
+        "end": 88,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli tab-list\r\n",
+          "npx @playwright/cli tab-new\r\n",
+          "npx @playwright/cli tab-new https://example.com/page\r\n",
+          "npx @playwright/cli tab-close\r\n",
+          "npx @playwright/cli tab-close 2\r\n",
+          "npx @playwright/cli tab-select 0\r\n"
+        ]
+      },
+      {
+        "start": 92,
+        "end": 99,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli console\r\n",
+          "npx @playwright/cli console warning\r\n",
+          "npx @playwright/cli network\r\n",
+          "npx @playwright/cli run-code \"await page.waitForTimeout(1000)\"\r\n",
+          "npx @playwright/cli tracing-start\r\n",
+          "npx @playwright/cli tracing-stop\r\n"
+        ]
+      },
+      {
+        "start": 105,
+        "end": 108,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli --session todo open https://demo.playwright.dev/todomvc\r\n",
+          "npx @playwright/cli --session todo snapshot\r\n"
+        ]
+      },
+      {
+        "start": 112,
+        "end": 115,
+        "replacement": [
+          "```powershell\r\n",
+          "$env:PLAYWRIGHT_CLI_SESSION = 'todo'\r\n",
+          "npx @playwright/cli open https://demo.playwright.dev/todomvc\r\n"
+        ]
+      }
+    ]
+  },
+  "skills/playwright/references/workflows.md": {
+    "base_sha256": "621d2b8542a91d1d5cd65a5a7774ea250683e4c217e00e9c90d301eb6367d86e",
+    "result_sha256": "2050e4532d0ec6e974848ed870ef66cde3673f363bcc2f7ebfe7d27e1dd1c173",
+    "render_harness_home": true,
+    "changes": [
+      {
+        "start": 2,
+        "end": 4,
+        "replacement": [
+          "Use PowerShell through the DSH `pwsh` tool, run `npx @playwright/cli` directly, and snapshot often.\r\n"
+        ]
+      },
+      {
+        "start": 8,
+        "end": 13,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli open https://example.com\r\n",
+          "npx @playwright/cli snapshot\r\n",
+          "npx @playwright/cli click e3\r\n",
+          "npx @playwright/cli snapshot\r\n"
+        ]
+      },
+      {
+        "start": 17,
+        "end": 25,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli open https://example.com/form --headed\r\n",
+          "npx @playwright/cli snapshot\r\n",
+          "npx @playwright/cli fill e1 \"user@example.com\"\r\n",
+          "npx @playwright/cli fill e2 \"password123\"\r\n",
+          "npx @playwright/cli click e3\r\n",
+          "npx @playwright/cli snapshot\r\n",
+          "npx @playwright/cli screenshot\r\n"
+        ]
+      },
+      {
+        "start": 29,
+        "end": 34,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli open https://example.com\r\n",
+          "npx @playwright/cli snapshot\r\n",
+          "npx @playwright/cli eval \"document.title\"\r\n",
+          "npx @playwright/cli eval \"el => el.textContent\" e12\r\n"
+        ]
+      },
+      {
+        "start": 40,
+        "end": 43,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli console warning\r\n",
+          "npx @playwright/cli network\r\n"
+        ]
+      },
+      {
+        "start": 47,
+        "end": 49,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli tracing-start\r\n"
+        ]
+      },
+      {
+        "start": 50,
+        "end": 52,
+        "replacement": [
+          "npx @playwright/cli tracing-stop\r\n",
+          "npx @playwright/cli screenshot\r\n"
+        ]
+      },
+      {
+        "start": 58,
+        "end": 62,
+        "replacement": [
+          "```powershell\r\n",
+          "npx @playwright/cli --session marketing open https://example.com\r\n",
+          "npx @playwright/cli --session marketing snapshot\r\n",
+          "npx @playwright/cli --session checkout open https://example.com/checkout\r\n"
+        ]
+      },
+      {
+        "start": 66,
+        "end": 69,
+        "replacement": [
+          "```powershell\r\n",
+          "$env:PLAYWRIGHT_CLI_SESSION = 'checkout'\r\n",
+          "npx @playwright/cli open https://example.com/checkout\r\n"
+        ]
+      },
+      {
+        "start": 92,
+        "end": 93,
+        "replacement": [
+          "- If an element ref fails, run `npx @playwright/cli snapshot` again and retry.\r\n"
+        ]
+      }
+    ]
+  },
+  "skills/workflow-route-mapper/references/sidebar-panel.md": {
+    "base_sha256": "9009c0573f9ee02db5523f53361eb233cde4c7eaca6d3a75280ce3184ecba6d3",
+    "result_sha256": "200c85aa27b6f164f4c00e2cbe738d5bda084b63718e09170fae731c563ee923",
+    "render_harness_home": true,
+    "changes": [
+      {
+        "start": 2,
+        "end": 3,
+        "replacement": [
+          "用户在 DSH 聊天中下指令，由代理负责准备、启动和更新面板；每个新任务不要求用户手动启动其他软件。面板是本机页面，显示同目录 `state.json` 的内容。它只能呈现代理写入的进度，不能自行推断工具进度。按当前宿主可用的展示位置呈现；没有右侧浏览器时，按 Skill 正文使用聊天和文档保持当前入口。\n"
+        ]
+      },
+      {
+        "start": 9,
+        "end": 10,
+        "replacement": [
+          "4. 在最终回复中给出返回的 URL，并使用可用浏览器检查面板是否读取到状态。此面板通过 HTTP 读取 `state.json`，持续查看使用该 URL。`present` 接受文件路径，不接受 URL，也不创建宿主侧栏；可用它交付路线记录文档，面板 HTML 与 JSON 保留为维护来源。当前宿主提供其他持续展示入口时按其协议接入；今后本任务的内容更新只改 JSON，不要求用户刷新页面。服务或 DSH 退出后，由代理按同一步骤重开。\n"
+        ]
+      }
+    ]
+  }
+}

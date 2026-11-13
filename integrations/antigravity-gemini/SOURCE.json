@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "origin": "User-owned antigravity-gemini-mcp wrapper, local source snapshot",
+  "license": "MIT",
+  "vendor_programs_included": false,
+  "files": [
+    {
+      "path": "app-config-writer.mjs",
+      "source_sha256": "1e4697ddec44f52773b5be79e5358f34f9d7e1360bbabe7d645932c4e25080d8",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "1e4697ddec44f52773b5be79e5358f34f9d7e1360bbabe7d645932c4e25080d8"
+    },
+    {
+      "path": "app-provider.mjs",
+      "source_sha256": "aef4ff4db3a6c5254318e9d31e48156d09fb6bec849d93db31f13a7b6767aafc",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "aef4ff4db3a6c5254318e9d31e48156d09fb6bec849d93db31f13a7b6767aafc"
+    },
+    {
+      "path": "artifact-page.mjs",
+      "source_sha256": "2c0780574bf56e7c2a0eccd843ac87b0760984dc3bcf3be0d1b7b19ccaa32721",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "2c0780574bf56e7c2a0eccd843ac87b0760984dc3bcf3be0d1b7b19ccaa32721"
+    },
+    {
+      "path": "chat.offline.test.mjs",
+      "source_sha256": "6a89896f048952723cf6c0eb0b3b3f8e8054d59ee1340a644ef4ec5e5a2931a3",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "6a89896f048952723cf6c0eb0b3b3f8e8054d59ee1340a644ef4ec5e5a2931a3"
+    },
+    {
+      "path": "conversation-boundary.mjs",
+      "source_sha256": "7ca3edfcb8ca09456608595e177749e5c330a325ec3b884137f26a40689fb732",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "7ca3edfcb8ca09456608595e177749e5c330a325ec3b884137f26a40689fb732"
+    },
+    {
+      "path": "conversation-boundary.offline.test.mjs",
+      "source_sha256": "6e0759f1cb60e3cfafee206f3241309e984470be77dbbc93e20f5255864593a6",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "6e0759f1cb60e3cfafee206f3241309e984470be77dbbc93e20f5255864593a6"
+    },
+    {
+      "path": "conversation-log.mjs",
+      "source_sha256": "11cc67bbb88b54cb7769057dd19bcfdbf1d1e8cd8731865f9711ca262927076e",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "11cc67bbb88b54cb7769057dd19bcfdbf1d1e8cd8731865f9711ca262927076e"
+    },
+    {
+      "path": "conversation-log.offline.test.mjs",
+      "source_sha256": "9662b8df13dd86a7e9b796a4cc6606e0c04b707c214f3f894a0026039e058a9e",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "9662b8df13dd86a7e9b796a4cc6606e0c04b707c214f3f894a0026039e058a9e"
+    },
+    {
+      "path": "diagnose-binding.mjs",
+      "source_sha256": "e5760c629b63f88dbc09b8b4373b0728891a335c88baeec95175c498022d8921",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "e5760c629b63f88dbc09b8b4373b0728891a335c88baeec95175c498022d8921"
+    },
+    {
+      "path": "native-chat.mjs",
+      "source_sha256": "51ffad90408a66110758403e129b3270e34fc9f504c853eb1f3c389480f13a6a",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "51ffad90408a66110758403e129b3270e34fc9f504c853eb1f3c389480f13a6a"
+    },
+    {
+      "path": "native-command.mjs",
+      "source_sha256": "2f0d4b45434dca4b9fe852fc72fa001501d6bd45de102ce13c80efab326d912a",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "2f0d4b45434dca4b9fe852fc72fa001501d6bd45de102ce13c80efab326d912a"
+    },
+    {
+      "path": "native-command.offline.test.mjs",
+      "source_sha256": "1405d24d801fb59ff38f6e4937a55b108a5fbcd8f76c930bdc44037902413181",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "1405d24d801fb59ff38f6e4937a55b108a5fbcd8f76c930bdc44037902413181"
+    },
+    {
+      "path": "registry.mjs",
+      "source_sha256": "3a7e9a37f446be6c8ecac9820409b32c350df9e941e60c06d89c790e5147e487",
+      "changes": [
+        "Normalize line endings to LF",
+        "Propagate reviewed local bindings through registry descriptor and worker bootstrap; isolate child test home"
+      ],
+      "public_sha256": "02a44b08a114f0f2906fa3a02baa10aeffb05d7716263527508536c55fb25e1b"
+    },
+    {
+      "path": "registry.offline.test.mjs",
+      "source_sha256": "b53c84a12ee5cb8dd0e6965b355758db6615a7b1d17bb2287a7dab479d34c39d",
+      "changes": [
+        "Synthetic fixture UUID",
+        "Normalize line endings to LF",
+        "Propagate reviewed local bindings through registry descriptor and worker bootstrap; isolate child test home"
+      ],
+      "public_sha256": "f21566ab3f8fbdc0cfbdee577b9243ea3272b7bf0fbff325112eef08e13f74ef"
+    },
+    {
+      "path": "route-work-gate.mjs",
+      "source_sha256": "a5577ff69d0113cf143fa7313c168121c132c6601f6a8d0587393ebbb5177b87",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "a5577ff69d0113cf143fa7313c168121c132c6601f6a8d0587393ebbb5177b87"
+    },
+    {
+      "path": "route-work-gate.offline.test.mjs",
+      "source_sha256": "edaf647a8a9b42770df35af9a138c0aed3be7f9a830a96cad854d0efb919263d",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "edaf647a8a9b42770df35af9a138c0aed3be7f9a830a96cad854d0efb919263d"
+    },
+    {
+      "path": "runtime-config.mjs",
+      "source_sha256": "69624011bc1ef28a4e7a569176f91475071c47da1e90d49ccca0bef261925af6",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "69624011bc1ef28a4e7a569176f91475071c47da1e90d49ccca0bef261925af6"
+    },
+    {
+      "path": "runtime-version.mjs",
+      "source_sha256": "13f739a70bbd8c24232d08fcb6d7eb6ad3104acecaac145abda0655bf4312ec0",
+      "changes": [
+        "Normalize line endings to LF",
+        "Propagate reviewed local bindings through registry descriptor and worker bootstrap; isolate child test home"
+      ],
+      "public_sha256": "531a34277cde94ed2f199219de33a97cce7178397ff657068051017113a4fc46"
+    },
+    {
+      "path": "server.mjs",
+      "source_sha256": "9e5c9001259734cd3f9019e7122cdba930780c491a3c0e2095fffbe83d0acd81",
+      "changes": [
+        "No built-in acceptance of deployment-specific legacy receipt",
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "910cfd6aa1369991855a1753c0c7d0787e202fc29b78cb788dc20183fc4065f0"
+    },
+    {
+      "path": "server.offline.test.mjs",
+      "source_sha256": "25d02d8f207b68507e15975e7c40287ee0580b6c11f093a70b2e798cbe233365",
+      "changes": [
+        "Temporary workspace fixtures use synthetic conversation identity",
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "cc593e4112676f33bab3699dacaf04820efacce87913238e2d620bc2e2d162d5"
+    },
+    {
+      "path": "stdio-call.mjs",
+      "source_sha256": "bda1dbfb8f364422fb8219f2205d710f7192f0ab2bc72842dab215c30a9fdce1",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "bda1dbfb8f364422fb8219f2205d710f7192f0ab2bc72842dab215c30a9fdce1"
+    },
+    {
+      "path": "task-store.mjs",
+      "source_sha256": "add250dfdc3e6fe7de77568c1b6172e35e97aff11d20735e3a200f850543c435",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "add250dfdc3e6fe7de77568c1b6172e35e97aff11d20735e3a200f850543c435"
+    },
+    {
+      "path": "turns.mjs",
+      "source_sha256": "3994e1913430567aeab86356d1438dadab4e7a9841a1a2295d95e37a77f1d719",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "3994e1913430567aeab86356d1438dadab4e7a9841a1a2295d95e37a77f1d719"
+    },
+    {
+      "path": "v3.offline.test.mjs",
+      "source_sha256": "fde1c0e8ad224441c3a0d8640917ed66523e7e02905b73a81d291155be634b97",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "fde1c0e8ad224441c3a0d8640917ed66523e7e02905b73a81d291155be634b97"
+    },
+    {
+      "path": "worker.mjs",
+      "source_sha256": "601547c621298284ecf126842ed067a5fd6d11992a1c4762fe5ec56e92e5fe8b",
+      "changes": [
+        "Normalize line endings to LF",
+        "Propagate reviewed local bindings through registry descriptor and worker bootstrap; isolate child test home"
+      ],
+      "public_sha256": "716908cf5a04b5648f3083b768508ab39314f6bdf49b873a501bc6233570624d"
+    },
+    {
+      "path": "live2d-sidecar/official-agentapi.mjs",
+      "source_sha256": "8bf1cc9a6a87f2efdf8644b2a25f8630842a6d5c5edd7161506b3ab292ccf785",
+      "changes": [
+        "Local environment bindings replace personal paths and identity; exact wrapper and metadata verification retained",
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "4af4f95337fa7ffb5b5a5b5d68dc8eb783851bc7abbbc85785874a0a8c29a383"
+    },
+    {
+      "path": "live2d-sidecar/parent-lifetime.mjs",
+      "source_sha256": "1821e230092e2d6923fd7ad88051775ffce28a63dc115b13f3c18c4e6731c4a3",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "1821e230092e2d6923fd7ad88051775ffce28a63dc115b13f3c18c4e6731c4a3"
+    },
+    {
+      "path": "live2d-sidecar/protocol.mjs",
+      "source_sha256": "26cf9afa9e6e859208c01f336bcbc6406b9be52b00c0c7197f1570966423504c",
+      "changes": [
+        "Legacy conversation requires explicit local binding",
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "ce2c4c28ff90285a0e9982623d7068de513e773148cc9e383a3c09cf15b84c69"
+    },
+    {
+      "path": "live2d-sidecar/worker.mjs",
+      "source_sha256": "e837f2fa0f244fb2c48228483fe2c1cad3498b939f71318795bafb76099edff6",
+      "changes": [
+        "Normalize line endings to LF"
+      ],
+      "public_sha256": "e837f2fa0f244fb2c48228483fe2c1cad3498b939f71318795bafb76099edff6"
+    }
+  ],
+  "excluded": [
+    "bindings.json",
+    "docs/",
+    "README.md",
+    "live2d-sidecar/*.json",
+    "live2d-sidecar/runtime/"
+  ],
+  "generated_files": [
+    "README.md",
+    "package.json",
+    ".gitignore",
+    "binding.offline.test.mjs",
+    "TESTING.md",
+    "local-bindings.mjs"
+  ],
+  "verification": {
+    "node": "26.5.0",
+    "offline_tests": 65,
+    "passed": 65,
+    "source_unchanged": true
+  },
+  "source_sha256_basis": "actual local source working-tree bytes; not git show"
+}

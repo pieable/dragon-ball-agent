@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "skill": "write-instructions-zh",
+  "local_dependencies": [
+    "MODIFICATION_LOG.md",
+    "RULE_RATIONALE.md"
+  ],
+  "install_policy": "preserve-existing-unmanaged; never overwrite private dependencies with templates; report missing required dependency before that branch",
+  "public_files": [
+    "skills/write-instructions-zh/LOCAL-DEPENDENCIES.md",
+    "skills/write-instructions-zh/SKILL.md",
+    "skills/write-instructions-zh/agents/openai.yaml",
+    "skills/write-instructions-zh/references/behavior-validation.md",
+    "skills/write-instructions-zh/references/chatgpt-project-instructions.md",
+    "skills/write-instructions-zh/references/codex-prompt-assembly.md",
+    "skills/write-instructions-zh/references/eval-cases.md"
+  ]
+}

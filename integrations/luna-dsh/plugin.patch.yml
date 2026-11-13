@@ -1,0 +1,46 @@
+- id: agent-default-model
+  config: {provider: luna-api, model: gpt-6-luna, reasoningEffort: medium}
+- id: llm-pi-ai
+  config:
+    providers:
+      luna-api:
+        api: openai-responses
+        baseURL: https://api.openai.com/v1
+        apiKeyEnv: LUNA_OPENAI_API_KEY
+        models:
+          - id: gpt-6-luna
+            contextWindow: 1050000
+            maxTokens: 128000
+            reasoningEfforts: {off: none, low: low, medium: medium, high: high, xhigh: xhigh, max: max}
+- id: llm-deepseek
+  disabled: true
+- id: llm-deepseek-account
+  disabled: true
+- id: session-title-llm
+  disabled: true
+- id: tool-subagent
+  disabled: true
+- id: tool-subagent-fork
+  disabled: true
+- id: tool-subagent-control
+  disabled: true
+- id: tool-workflow
+  disabled: true
+- id: tool-web
+  config: {search: false, fetch: true}
+- id: web-search-deepseek
+  disabled: true
+- id: web-deepseek-api
+  disabled: true
+
+- id: credentials
+  disabled: true
+- id: authorization
+  disabled: true
+- id: deepseek-account
+  disabled: true
+- id: hmr
+  disabled: true
+- insert:
+    - id: luna-subagent-bridge
+      name: luna-dsh-subagent-mcp/plugin

@@ -1,0 +1,3 @@
+interface:
+  display_name: "MarkItDown Files"
+  short_description: "Convert non-Markdown files to Markdown for content analysis"

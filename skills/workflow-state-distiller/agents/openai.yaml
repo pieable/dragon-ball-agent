@@ -1,4 +1,5 @@
 interface:
-  display_name: "Workflow State Distiller"
-  short_description: "从分散的对话与证据中恢复能够可靠指导下一步的当前任务状态"
-  default_prompt: "使用 $workflow-state-distiller 判断现有理解能否稳定指导下一步，需要时从表达、选择、纠正、试用和失败路线中恢复目的、背景、行动、结果与边界，形成最小可执行状态，并按适用范围决定已确认理解的保存位置。"
+  display_name: "任务理解蒸馏"
+  short_description: "检验目标、前提与竞争解释，按证据修正理解和行动"
+  default_prompt: "使用 $workflow-state-distiller 恢复当前目标和有效决定，核对重要前提、证据、竞争解释与未知；有连续三轮未进展、投入异常或局部结果不符整体目标时复查原因并确定下一步，维护跨会话行动状态和轮次继承。"
+

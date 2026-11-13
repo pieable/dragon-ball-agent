@@ -1,0 +1,4 @@
+interface:
+  display_name: "技术改造"
+  short_description: "查清旧成果与补救依赖，完成迁移、适配和重构，验证兼容性与维护收益"
+  default_prompt: "使用 $system-reengineering 检查当前改造目标与旧实现，验证替代方案并完成约定范围的转换。"

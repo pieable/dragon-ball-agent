@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "skill": "frontend-design",
+  "local_dependencies": [
+    "references/aesthetic-direction.md",
+    "references/visual-quality.md",
+    "references/design-system.md",
+    "references/visual-critique.md"
+  ],
+  "install_policy": "preserve-existing-unmanaged; never overwrite private dependencies with templates; report missing required dependency before that branch",
+  "public_files": [
+    "skills/frontend-design/LICENSE.txt",
+    "skills/frontend-design/LOCAL-DEPENDENCIES.md",
+    "skills/frontend-design/SKILL.md",
+    "skills/frontend-design/agents/openai.yaml",
+    "skills/frontend-design/assets/design-comparison.html",
+    "skills/frontend-design/references/accessibility-interaction.md",
+    "skills/frontend-design/references/claude-design-license.txt",
+    "skills/frontend-design/references/claude-design-sources.md",
+    "skills/frontend-design/references/design-handoff.md",
+    "skills/frontend-design/references/design-motion.md",
+    "skills/frontend-design/references/design-resource-library.md",
+    "skills/frontend-design/references/form-workflows.md",
+    "skills/frontend-design/references/information-visualization.md",
+    "skills/frontend-design/references/interface-copy.md",
+    "skills/frontend-design/references/motion-verification.md",
+    "skills/frontend-design/references/runtime-quality.md",
+    "skills/frontend-design/references/visual-production.md",
+    "skills/frontend-design/references/visual-reconstruction.md",
+    "skills/frontend-design/references/workspace-interactions.md",
+    "skills/frontend-design/scripts/LICENSE.stageshow",
+    "skills/frontend-design/scripts/motion-capture.mjs"
+  ]
+}

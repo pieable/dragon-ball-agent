@@ -4,3 +4,20 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Local credentials, generated installation state and private overlays
+.env
+.env.*
+!.env.example
+auth.json
+secrets/
+.sandbox-secrets/
+private/
+private-baseline/
+local-overrides/
+installation-state/
+*.sqlite
+*.sqlite-*
+*.db-wal
+*.db-shm
+node_modules/

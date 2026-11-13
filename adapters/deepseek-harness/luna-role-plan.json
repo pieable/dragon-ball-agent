@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "status": "adaptation-in-progress-not-deployed",
+  "authority": "User requested worker, explorer, code-executor and web-researcher only. Default, content-designer and visual-usability-tester remain in Codex without deletion.",
+  "source": "adapters/codex/agents",
+  "roles": [
+    {
+      "id": "code-executor",
+      "reasoning_effort": "high",
+      "target": "luna-dsh",
+      "verification": "pending"
+    },
+    {
+      "id": "content-designer",
+      "reasoning_effort": "xhigh",
+      "target": "codex",
+      "action": "retain-native-content-designer"
+    },
+    {
+      "id": "default",
+      "reasoning_effort": "medium",
+      "target": "codex",
+      "action": "retain-native-default"
+    },
+    {
+      "id": "explorer",
+      "reasoning_effort": "medium",
+      "target": "luna-dsh",
+      "verification": "pending"
+    },
+    {
+      "id": "web-researcher",
+      "reasoning_effort": "high",
+      "target": "luna-dsh",
+      "verification": "pending"
+    },
+    {
+      "id": "worker",
+      "reasoning_effort": "medium",
+      "target": "luna-dsh",
+      "verification": "pending"
+    },
+    {
+      "id": "visual-usability-tester",
+      "reasoning_effort": "medium",
+      "target": "codex",
+      "action": "retain-native-visual-testing"
+    }
+  ],
+  "acceptance": "For each migrated role, verify actual required tools, permissions, task context and completion/reporting behavior. Shared model name and successful generic MCP handshake are not role acceptance. Do not change the live role routes from this planning file."
+}

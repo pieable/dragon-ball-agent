@@ -1,0 +1,4 @@
+interface:
+  display_name: "公司研究"
+  short_description: "研究公司的产品、经营、竞争与关键依赖"
+  default_prompt: "使用 $company-research-brief 研究这家公司，围绕我关心的问题核验资料、比较业务与竞争关系；解释和中文成稿结合 teach-and-explain、writing-zh。"
