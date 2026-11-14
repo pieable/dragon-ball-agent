@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "status": "adaptation-in-progress-not-deployed",
+  "status": "public-candidate-native-mock-verified-not-deployed",
   "authority": "User requested worker, explorer, code-executor and web-researcher only. Default, content-designer and visual-usability-tester remain in Codex without deletion.",
-  "source": "adapters/codex/agents",
+  "source": "adapters/codex/agents (deployed local config.toml registration via DSH_AGENTS_HOME; no duplicate role prompt files)",
   "roles": [
     {
       "id": "code-executor",
       "reasoning_effort": "high",
       "target": "luna-dsh",
-      "verification": "pending"
+      "verification": "native-mock-role-contract-and-permission-tests-passed; production-cutover-pending"
     },
     {
       "id": "content-designer",
@@ -26,19 +26,19 @@
       "id": "explorer",
       "reasoning_effort": "medium",
       "target": "luna-dsh",
-      "verification": "pending"
+      "verification": "native-mock-role-contract-and-permission-tests-passed; production-cutover-pending"
     },
     {
       "id": "web-researcher",
       "reasoning_effort": "high",
       "target": "luna-dsh",
-      "verification": "pending"
+      "verification": "native-mock-role-contract-and-permission-tests-passed; production-cutover-pending"
     },
     {
       "id": "worker",
       "reasoning_effort": "medium",
       "target": "luna-dsh",
-      "verification": "pending"
+      "verification": "native-mock-role-contract-and-permission-tests-passed; production-cutover-pending"
     },
     {
       "id": "visual-usability-tester",
@@ -47,5 +47,23 @@
       "action": "retain-native-visual-testing"
     }
   ],
-  "acceptance": "For each migrated role, verify actual required tools, permissions, task context and completion/reporting behavior. Shared model name and successful generic MCP handshake are not role acceptance. Do not change the live role routes from this planning file."
+  "acceptance": "For each migrated role, verify actual required tools, permissions, task context and completion/reporting behavior. Shared model name and successful generic MCP handshake are not role acceptance. Do not change the live role routes from this planning file.",
+  "runtime_role_loader": "integrations/luna-dsh/role-catalog.mjs",
+  "runtime_effort_override": {
+    "values": [
+      "off",
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+    ],
+    "operations": [
+      "spawn_agent",
+      "send_message",
+      "set_reasoning_effort"
+    ],
+    "effect": "next model request; existing in-flight request unchanged; no wake on set"
+  },
+  "source_commit": "17fba9f"
 }

@@ -9,7 +9,7 @@ const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const dir=path.join(root,'.tests-tmp','live-api-'+Date.now());await fs.mkdir(dir,{recursive:true});
 const marker='LUNA_TOOL_PROOF_'+randomUUID();await fs.writeFile(path.join(dir,'proof.txt'),marker);
 const {client}=await ensureHost();
-const created=await client.call('spawn_agent',{request_id:randomUUID(),cwd:dir,permission_mode:'read-only',reasoning_effort:'medium',context:'This is a small, authorized API integration verification. Do not modify files or launch other models.',prompt:'Read proof.txt with the supplied filesystem tool. Send its exact contents to the parent using report_to_parent. Then reply with the same exact contents and finish.'});
+const created=await client.call('spawn_agent',{request_id:randomUUID(),role:'worker',cwd:dir,permission_mode:'read-only',reasoning_effort:'medium',context:'This is a small, authorized API integration verification. Do not modify files or launch other models.',prompt:'Read proof.txt with the supplied filesystem tool. Send its exact contents to the parent using report_to_parent. Then reply with the same exact contents and finish.'});
 let result;
 try {
  const deadline=Date.now()+180000;

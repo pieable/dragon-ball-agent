@@ -55,7 +55,17 @@
       "source": "integrations/luna-dsh",
       "provenance": "integrations/luna-dsh/SOURCE.json",
       "native_mock_verified": true,
-      "role_adaptation": "adapters/deepseek-harness/luna-role-plan.json"
+      "role_adaptation": "adapters/deepseek-harness/luna-role-plan.json",
+      "source_commit": "17fba9f",
+      "role_source": "deployed Codex role originals through DSH_AGENTS_HOME",
+      "dynamic_reasoning_effort": true,
+      "optional_worktree_workflow": "disabled unless explicitly enabled with local approved roots",
+      "dependencies": [
+        "Node.js",
+        "compatible installed DeepSeek Harness",
+        "Python >=3.11 (tomllib)",
+        "Git for optional worktree workflow"
+      ]
     }
   ],
   "policy": "Maintain reviewed integration source once. Keep executable locations, account bindings and credentials local. Inspecting configuration does not start tools or authorize their use."

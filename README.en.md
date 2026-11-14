@@ -2,7 +2,7 @@
 
 A shared source of working principles and skills for Codex, Claude Code, DeepSeek Harness and Antigravity, with native adapters and local private layers.
 
-The current branch builds isolated candidates from 19 skills and 194 reviewed source files. Codex includes 11 native roles. Other hosts retain unresolved native role, permission and lifecycle differences. Full candidates are not deployment-ready; actual host loading and integration validation remain pending.
+The current branch builds isolated candidates from 19 skills and 194 reviewed source files. Codex includes 11 native roles. Explicitly selected Codex rules/skills and DeepSeek Harness skills can be installed through the validated component workflow. Full candidates remain blocked while native roles, permissions, lifecycle and remaining host-loading checks are unresolved. See INSTALL for fresh installation, migration and hash-bound adoption of existing files.
 
 - [Chinese guide](README.md)
 - [Build, preview and recovery](INSTALL.md)

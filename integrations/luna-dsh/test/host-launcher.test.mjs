@@ -90,7 +90,7 @@ test('installed official DSH private profile publishes plugin capabilities witho
   const runtime=await resolveRuntime();
   const host=await ensureHost({...options,runtime});
   try{
-    assert.equal(host.capabilities.provider,'luna-api');
+    assert.equal(host.capabilities.provider,'openai');
     assert.equal(host.capabilities.transport,'DSH plugin');
     assert.deepEqual(await host.client.call('list_agents'),[]);
   }finally{await host.client.call('shutdown');}

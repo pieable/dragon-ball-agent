@@ -1,8 +1,15 @@
 - id: agent-default-model
-  config: {provider: luna-api, model: gpt-6-luna, reasoningEffort: medium}
+  config: {provider: openai, model: gpt-6-luna, reasoningEffort: medium}
 - id: llm-pi-ai
   config:
     providers:
+      openai:
+        api: openai-responses
+        baseURL: https://api.openai.com/v1
+        apiKeyEnv: LUNA_OPENAI_API_KEY
+        models:
+          - id: gpt-6-luna
+            reasoningEfforts: {off: none, low: low, medium: medium, high: high, xhigh: xhigh, max: max}
       luna-api:
         api: openai-responses
         baseURL: https://api.openai.com/v1
