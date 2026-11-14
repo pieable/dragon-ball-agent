@@ -34,6 +34,22 @@ class InventoryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             inventory(self.config, "deepseek-harness", self.catalog)
 
+    def test_registered_alias_resolves_component_without_exposing_values(self):
+        self.catalog['components'][0]['config_aliases'] = ['known-native']
+        self.config.write_text('[mcp_servers.known-native]\ncommand="private-path"\n')
+        result = inventory(self.config, 'codex', self.catalog)
+        self.assertEqual(result['integrations'][0]['component_id'], 'known')
+        self.assertEqual(result['integrations'][0]['id'], 'known-native')
+        self.assertEqual(result['not_in_this_config'], [])
+        self.assertEqual(result['unlisted_entries_count'], 0)
+        self.assertNotIn('private-path', json.dumps(result))
+
+    def test_ambiguous_alias_is_rejected(self):
+        self.catalog['components'][0]['config_aliases'] = ['known']
+        self.config.write_text('{}')
+        with self.assertRaises(ValueError):
+            inventory(self.config, 'claude-code', self.catalog)
+
     def test_native_legacy_url_alias(self):
         self.config.write_text('{"mcpServers":{"known":{"serverUrl":"private-url"}}}')
         self.assertEqual(inventory(self.config, "antigravity", self.catalog)["integrations"][0]["transport"], "remote")

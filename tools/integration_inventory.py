@@ -22,6 +22,11 @@ def inventory(config, harness, catalog):
     if not isinstance(table, dict):
         raise ValueError("Invalid MCP server table")
     known = {item["id"]: item for item in catalog["components"]}
+    for item in catalog["components"]:
+        for alias in item.get("config_aliases", []):
+            if alias in known:
+                raise ValueError("Duplicate catalog identifier")
+            known[alias] = item
     result, unknown = [], 0
     for name, entry in table.items():
         if name not in known:
@@ -34,16 +39,17 @@ def inventory(config, harness, catalog):
         remote = isinstance(entry.get("url"), str) or (harness == "antigravity" and isinstance(entry.get("serverUrl"), str))
         transport = "remote" if remote else "stdio" if isinstance(entry.get("command"), str) else "unspecified"
         result.append({"id": name, "status": "configured",
+                       "component_id": known[name]["id"],
                        "transport": transport,
                        "explicitly_disabled": entry.get("enabled") is False or entry.get("disabled") is True,
                        "has_local_env": bool(entry.get("env")),
                        "has_headers": bool(entry.get("headers")),
                        "source_status": known[name]["source_status"]})
-    present = {item["id"] for item in result}
+    present = {known[item["id"]]["id"] for item in result}
     return {"harness": harness, "scope": "explicit-config-only",
             "health_checked": False, "configuration_changed": False,
             "integrations": result, "unlisted_entries_count": unknown,
-            "not_in_this_config": sorted(set(known) - present)}
+            "not_in_this_config": sorted({item["id"] for item in catalog["components"]} - present)}
 
 
 if __name__ == "__main__":

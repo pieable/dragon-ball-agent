@@ -48,6 +48,7 @@
     },
     {
       "id": "luna-subagent",
+      "config_aliases": ["luna-dsh"],
       "ownership": "local-integration",
       "source_status": "reviewed-source-candidate-not-deployed",
       "purpose": "OpenAI API execution layer in DeepSeek Harness",
