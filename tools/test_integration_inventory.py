@@ -50,6 +50,13 @@ class InventoryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             inventory(self.config, 'claude-code', self.catalog)
 
+    def test_invalid_alias_entry_retains_component_identity(self):
+        self.catalog['components'][0]['config_aliases'] = ['known-native']
+        self.config.write_text('{"mcpServers":{"known-native":false}}')
+        result = inventory(self.config, 'claude-code', self.catalog)
+        self.assertEqual(result['integrations'][0], {
+            'id': 'known-native', 'component_id': 'known', 'status': 'invalid-entry'})
+
     def test_native_legacy_url_alias(self):
         self.config.write_text('{"mcpServers":{"known":{"serverUrl":"private-url"}}}')
         self.assertEqual(inventory(self.config, "antigravity", self.catalog)["integrations"][0]["transport"], "remote")

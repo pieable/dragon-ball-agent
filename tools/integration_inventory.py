@@ -33,7 +33,7 @@ def inventory(config, harness, catalog):
             unknown += 1
             continue
         if not isinstance(entry, dict):
-            result.append({"id": name, "status": "invalid-entry"})
+            result.append({"id": name, "component_id": known[name]["id"], "status": "invalid-entry"})
             continue
         # Do not infer reachability, process health or loaded tools from a path.
         remote = isinstance(entry.get("url"), str) or (harness == "antigravity" and isinstance(entry.get("serverUrl"), str))
